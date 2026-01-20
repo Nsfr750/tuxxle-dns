@@ -5,6 +5,7 @@ Un server DNS completo con pannello di gestione grafico per Windows, sviluppato 
 ## Caratteristiche
 
 ### Funzionalità del Server DNS
+
 - **Server DNS UDP completo**: Implementazione nativa del protocollo DNS
 - **Supporto per record multipli**: A, AAAA, CNAME, MX, TXT, NS, SOA, PTR
 - **Gestione connessioni multiple**: Supporto per query simultanee
@@ -12,6 +13,7 @@ Un server DNS completo con pannello di gestione grafico per Windows, sviluppato 
 - **Logging dettagliato**: Tracciamento completo delle query e risposte
 
 ### Interfaccia Grafica
+
 - **Pannello di gestione intuitivo**: Interfaccia moderna con PySide6
 - **Gestione record DNS**: Aggiungi, modifica, elimina record DNS
 - **Monitoraggio in tempo reale**: Statistiche e metriche del server
@@ -19,6 +21,7 @@ Un server DNS completo con pannello di gestione grafico per Windows, sviluppato 
 - **Visualizzazione log**: Logs in tempo reale con filtri e export
 
 ### Sicurezza e Affidabilità
+
 - **Validazione input**: Controllo rigoroso dei record DNS
 - **Gestione errori**: Robusta gestione delle eccezioni
 - **Logging completo**: Tracciamento di tutte le attività
@@ -27,11 +30,13 @@ Un server DNS completo con pannello di gestione grafico per Windows, sviluppato 
 ## Installazione
 
 ### Prerequisiti
+
 - Python 3.8 o superiore
 - Windows 10/11 (raccomandato)
 - Privilegi di amministratore (per la porta 53)
 
 ### Installazione Automatica
+
 ```bash
 # Clona il repository
 git clone https://github.com/Nsfr750/dns-server-manager.git
@@ -45,6 +50,7 @@ pip install -e .
 ```
 
 ### Installazione Manuale
+
 ```bash
 # Installa PySide6
 pip install PySide6>=6.6.0
@@ -56,6 +62,7 @@ python setup.py install
 ## Utilizzo
 
 ### Avvio del Server
+
 ```bash
 # Avvia l'interfaccia grafica
 python main.py
@@ -65,12 +72,14 @@ dns-server-gui
 ```
 
 ### Configurazione Iniziale
+
 1. **Avvio**: Lancia l'applicazione con privilegi di amministratore
 2. **Configurazione**: Usa la tab "Configuration" per impostare porta e indirizzo
 3. **Avvio Server**: Clicca "Start Server" per avviare il server DNS
 4. **Gestione Record**: Usa la tab "DNS Records" per aggiungere record personalizzati
 
 ### Gestione Record DNS
+
 - **Record A**: `example.com -> 192.168.1.1`
 - **Record AAAA**: `example.com -> 2001:db8::1`
 - **Record CNAME**: `www.example.com -> example.com`
@@ -78,7 +87,7 @@ dns-server-gui
 
 ## Struttura del Progetto
 
-```
+```text
 dns-server-manager/
 ├── main.py                 # Entry point principale
 ├── core/                   # Funzionalità del server
@@ -101,12 +110,14 @@ dns-server-manager/
 ## Configurazione
 
 ### Impostazioni del Server
+
 - **Porta DNS**: Default 53 (richiede privilegi di amministratore)
 - **Bind Address**: Default 0.0.0.0 (tutte le interfacce)
 - **Timeout Query**: Default 5 secondi
 - **Max Connessioni**: Default 1000
 
 ### Logging
+
 - **Livello Log**: DEBUG, INFO, WARNING, ERROR, CRITICAL
 - **File Log**: dns_server.log
 - **Rotazione Log**: Automatica con dimensione massima
@@ -117,7 +128,8 @@ dns-server-manager/
 ### Record DNS Supportati
 
 #### Record A (IPv4)
-```
+
+```text
 Nome: server.local
 Tipo: A
 Valore: 192.168.1.100
@@ -125,7 +137,8 @@ TTL: 300
 ```
 
 #### Record AAAA (IPv6)
-```
+
+```text
 Nome: server.local
 Tipo: AAAA
 Valore: 2001:db8::100
@@ -133,7 +146,8 @@ TTL: 300
 ```
 
 #### Record CNAME
-```
+
+```text
 Nome: www.local
 Tipo: CNAME
 Valore: server.local
@@ -141,7 +155,8 @@ TTL: 300
 ```
 
 #### Record MX
-```
+
+```text
 Nome: local
 Tipo: MX
 Valore: 10 mail.local
@@ -149,6 +164,7 @@ TTL: 300
 ```
 
 ### Integrazione con Windows
+
 1. **Servizio Windows**: Configura come servizio per avvio automatico
 2. **Firewall**: Aggiungi eccezioni per la porta DNS
 3. **Configurazione Rete**: Imposta il server DNS primario nelle impostazioni di rete
@@ -156,6 +172,7 @@ TTL: 300
 ## Risoluzione Problemi
 
 ### Porta 53 Già in Uso
+
 ```bash
 # Controlla cosa usa la porta 53
 netstat -ano | findstr :53
@@ -165,11 +182,13 @@ net stop dnscache
 ```
 
 ### Privilegi Insufficienti
+
 - Esegui come Amministratore
 - Controlla le policy di sicurezza
 - Verifica il firewall di Windows
 
 ### Problemi di Rete
+
 - Controlla la configurazione IP
 - Verifica le regole del firewall
 - Testa con `nslookup` o `dig`
@@ -177,6 +196,7 @@ net stop dnscache
 ## Sviluppo
 
 ### Ambiente di Sviluppo
+
 ```bash
 # Installa dipendenze di sviluppo
 pip install -r requirements.txt
@@ -190,6 +210,7 @@ black .
 ```
 
 ### Estensioni
+
 - Aggiungi nuovi tipi di record DNS
 - Implementa DNSSEC
 - Aggiungi interfaccia web
