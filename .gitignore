@@ -182,3 +182,4 @@ cython_debug/
 /.windsurf
 /setup
 dns_records.db
+nuitka-crash-report.xml
