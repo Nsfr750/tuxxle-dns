@@ -3,5 +3,4 @@ PySide6-Addons==6.10.1
 PySide6-Essentials==6.10.1
 wand==0.6.13
 qrcode==8.2
-pyinstaller==6.12.2
 nuitka==0.7.1
