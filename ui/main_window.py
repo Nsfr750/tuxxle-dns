@@ -27,7 +27,7 @@ from .sponsor import SponsorDialog
 from core.dns_server import DNSServer
 from core.config import Config
 from core.dns_records import DNSRecord, DNSRecordType
-import version
+from core import get_version_string
 from .themes import theme_manager
 
 class MainWindow(QMainWindow):

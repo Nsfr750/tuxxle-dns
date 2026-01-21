@@ -5,6 +5,7 @@ Setup script for DNS Server Manager
 
 from setuptools import setup, find_packages
 import os
+from core.version import __version__
 
 # Read the README file
 def read_readme():
@@ -24,7 +25,7 @@ def read_requirements():
 
 setup(
     name="dns-server-manager",
-    version="1.0.0",
+    version=__version__,
     author="Nsfr750",
     author_email="nsfr750@yandex.com",
     description="DNS Server with PySide6 Management Panel for Windows",
