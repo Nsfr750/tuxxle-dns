@@ -1,6 +1,12 @@
 # DNS Server Manager
 
-![ss](/assets/images/logo-text.png)
+![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue)
+![GUI](https://img.shields.io/badge/GUI-PyQt6.6-blue)
+![License](https://img.shields.io/badge/License-GPLv3-blue)
+[![Issues](https://img.shields.io/github/issues/Nsfr750/tuxxle-dns)](https://github.com/Nsfr750/tuxxle-dns/issues)
+
+![ss](assets/images/logo-text.png)
 
 A comprehensive DNS server management tool with graphical interface, built with PySide6 and Python.
 
