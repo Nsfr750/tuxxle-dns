@@ -84,7 +84,7 @@ class MenuManager:
         # quit app
         quit_action = file_menu.addAction("Quit")
         quit_action.setShortcut("Ctrl+Q")
-        quit_action.triggered.connect(self.main_window.close)
+        quit_action.triggered.connect(self.main_window.force_close)
 
     def _setup_edit_menu(self):
         """Setup Edit menu"""

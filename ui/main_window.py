@@ -180,9 +180,17 @@ class MainWindow(QMainWindow):
             event.accept()
     
     def force_close(self):
-        """Force close the application (called from tray menu)"""
-        self._force_close = True
-        self.close()
+        """Force close the application (called from tray menu or quit action)"""
+        # Stop DNS server if running
+        if hasattr(self, 'dns_server') and self.dns_server.running:
+            try:
+                self.dns_server.stop()
+            except:
+                pass  # Ignore errors during shutdown
+        
+        # Force quit the application directly
+        from PySide6.QtWidgets import QApplication
+        QApplication.quit()
     
     def _setup_theme(self):
         """Setup application theme"""
