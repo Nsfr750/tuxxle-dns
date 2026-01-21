@@ -9,6 +9,7 @@ from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt, QSettings
 from .themes import theme_manager
 from lang.language_manager import LanguageManager
+from .updates import UpdateManager
 
 class MenuManager:
     """Manages application menus"""
@@ -60,8 +61,6 @@ class MenuManager:
         # Language submenu
         language_menu = file_menu.addMenu("Language")
         
-        # Import language manager
-        from lang.language_manager import LanguageManager
         self.language_manager = LanguageManager()
         
         # Add language options

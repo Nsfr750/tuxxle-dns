@@ -24,6 +24,7 @@ from .menu import MenuManager
 from .about import AboutDialog
 from .help import HelpDialog
 from .sponsor import SponsorDialog
+from .updates import UpdateManager
 from core.dns_server import DNSServer
 from core.config import Config
 from core.dns_records import DNSRecord, DNSRecordType
@@ -49,6 +50,7 @@ class MainWindow(QMainWindow):
         # Setup UI
         self._setup_theme()
         self.menu_manager = MenuManager(self)
+        self.update_manager = UpdateManager(self)
         self._setup_ui()
         self._setup_status_bar()
         self._setup_timer()
@@ -508,7 +510,11 @@ Email: {version_info['email']}
     
     def _check_for_updates(self):
         """Check for application updates"""
-        QMessageBox.information(self, "Check for Updates", "Update checking will be implemented in future versions.")
+        try:
+            self.update_manager.check_for_updates()
+        except Exception as e:
+            self.logger.error(f"Error checking for updates: {e}")
+            QMessageBox.critical(self, "Update Error", f"Failed to check for updates: {e}")
     
     def _report_issue(self):
         """Report an issue"""
@@ -516,7 +522,30 @@ Email: {version_info['email']}
     
     def _open_documentation(self):
         """Open documentation"""
-        QMessageBox.information(self, "Documentation", "Documentation will be implemented in future versions.")
+        try:
+            import webbrowser
+            webbrowser.open("https://github.com/Nsfr750/tuxxle-dns/wiki")
+        except ImportError:
+            # Fallback: copy URL to clipboard
+            from PySide6.QtWidgets import QApplication
+            clipboard = QApplication.clipboard()
+            clipboard.setText("https://github.com/Nsfr750/tuxxle-dns/wiki")
+            
+            QMessageBox.information(
+                self,
+                "Documentation URL",
+                "Documentation URL copied to clipboard:\n\n"
+                "https://github.com/Nsfr750/tuxxle-dns/wiki\n\n"
+                "Please paste this URL in your browser."
+            )
+        except Exception as e:
+            self.logger.error(f"Error opening documentation: {e}")
+            QMessageBox.critical(
+                self,
+                "Documentation Error",
+                f"Failed to open documentation: {e}\n\n"
+                "Please visit: https://github.com/Nsfr750/tuxxle-dns/wiki"
+            )
     
     def _show_server_diagnostics(self):
         """Show server diagnostics"""
