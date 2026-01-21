@@ -4,9 +4,9 @@ This document describes the complete structure of the DNS Server Manager project
 
 ## Directory Structure
 
-```
+```text
 tuxxle-dns/
-├── README.md                 # Project overview and getting started guide
+├── README.md                # Project overview and getting started guide
 ├── CHANGELOG.md             # Version history and changes
 ├── requirements.txt         # Python dependencies
 ├── setup.py                 # Package setup and installation
@@ -59,15 +59,10 @@ tuxxle-dns/
 │   ├── install_deps.py      # Install dependencies script
 │   └── TXT                  # Setup notes or temporary file
 │
-├── assets/                  # Static assets (future)
-│   ├── icons/               # Application icons
-│   ├── images/              # Images and graphics
-│   └── themes/              # UI themes
-│
-└── scripts/                 # Utility scripts (future)
-    ├── backup.py            # Backup utilities
-    ├── migrate.py           # Database migration
-    └── deploy.py            # Deployment scripts
+└── assets/                  # Static assets (future)
+    ├── icons/               # Application icons
+    ├── images/              # Images and graphics
+    └── themes/              # UI themes
 ```
 
 ## Core Components
@@ -75,24 +70,28 @@ tuxxle-dns/
 ### `/core/` - DNS Server Core
 
 #### `config.py`
+
 - Configuration file management
 - Settings validation and defaults
 - Runtime configuration updates
 - Environment variable support
 
 #### `database.py`
+
 - Database connection management
 - ORM models for DNS records
 - Migration system
 - Backup and restore functionality
 
 #### `dns_records.py`
+
 - DNS record type definitions
 - Record validation and parsing
 - Serialization/deserialization
 - Record operations (CRUD)
 
 #### `dns_server.py`
+
 - Main DNS server implementation
 - Request handling and routing
 - Response generation
@@ -101,36 +100,42 @@ tuxxle-dns/
 ### `/ui/` - User Interface
 
 #### `main_window.py`
+
 - Main application window
 - Menu bar and status bar
 - Tab management
 - Window events and lifecycle
 
 #### `records_widget.py`
+
 - DNS records management interface
 - Table view with sorting/filtering
 - Add/Edit/Delete operations
 - Bulk operations support
 
 #### `stats_widget.py`
+
 - Real-time statistics display
 - Charts and graphs
 - Performance metrics
 - Historical data views
 
 #### `config_widget.py`
+
 - Configuration interface
 - Settings forms and validation
 - Import/export functionality
 - Profile management
 
 #### `logs_widget.py`
+
 - Real-time log monitoring
 - Log filtering and search
 - Export functionality
 - Color-coded log levels
 
 #### `database_widget.py`
+
 - Database management interface
 - Table inspection
 - Query execution
@@ -139,12 +144,14 @@ tuxxle-dns/
 ### `/lang/` - Internationalization
 
 #### `language_manager.py`
+
 - Language detection and switching
 - Translation loading
 - Locale management
 - RTL language support
 
 #### `translations.py`
+
 - Translation strings
 - Language packs
 - Pluralization rules
@@ -153,14 +160,18 @@ tuxxle-dns/
 ## Configuration Files
 
 ### `config.json`
+
 Default configuration with sections for:
+
 - DNS server settings (port, bind address, timeout)
 - Logging configuration (level, file, rotation)
 - UI preferences (theme, layout, window size)
 - Database settings (type, connection, backup)
 
 ### `requirements.txt`
+
 Python package dependencies:
+
 - PySide6 (GUI framework)
 - Database drivers
 - Logging utilities
@@ -169,12 +180,14 @@ Python package dependencies:
 ## Application Entry Points
 
 ### `main.py`
+
 - Application initialization
 - Dependency injection setup
 - Error handling and logging
 - GUI startup and lifecycle
 
 ### `setup.py`
+
 - Package installation
 - Dependency management
 - Entry point configuration
@@ -183,12 +196,14 @@ Python package dependencies:
 ## Supporting Files
 
 ### `version.py`
+
 - Version information and metadata
 - Build information
 - License and copyright details
 - Application constants
 
 ### `about.py`, `help.py`, `sponsor.py`
+
 - Dialog implementations
 - Static content management
 - User guidance and support
@@ -197,21 +212,27 @@ Python package dependencies:
 ## Development Structure
 
 ### `/tests/`
+
 Comprehensive test suite covering:
+
 - Unit tests for core functionality
 - Integration tests for components
 - UI testing and validation
 - Performance benchmarks
 
 ### `/docs/`
+
 Complete documentation including:
+
 - API reference
 - User guides
 - Developer documentation
 - Security and deployment guides
 
 ### `/setup/`
+
 Maintenance and setup utilities:
+
 - Environment preparation
 - Dependency installation
 - Cache cleaning
@@ -219,10 +240,9 @@ Maintenance and setup utilities:
 
 ## Data Flow
 
-```
+```text
 User Interface (ui/)
-    ↓ User Actions
-Application Logic (main.py)
+    ↓ User ActionsApplication Logic (main.py)
     ↓ Configuration
 Core Components (core/)
     ↓ DNS Operations
@@ -239,7 +259,9 @@ User Interface (ui/)
 - **Database**: SQLite (default), extensible to others
 
 ### Internal Dependencies
+
 - Core components are independent
+
 - UI components depend on core
 - Configuration system is central
 - Logging is used throughout
