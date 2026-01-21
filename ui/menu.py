@@ -4,10 +4,11 @@ Menu management for DNS Server Manager
 """
 
 import logging
-from PySide6.QtWidgets import QMenuBar, QMenu, QAction
+from PySide6.QtWidgets import QMenuBar, QMenu
+from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt, QSettings
 from .themes import theme_manager
-from ..lang.language_manager import LanguageManager
+from lang.language_manager import LanguageManager
 
 class MenuManager:
     """Manages application menus"""
@@ -60,7 +61,7 @@ class MenuManager:
         language_menu = file_menu.addMenu("Language")
         
         # Import language manager
-        from ..lang.language_manager import LanguageManager
+        from lang.language_manager import LanguageManager
         self.language_manager = LanguageManager()
         
         # Add language options
@@ -79,7 +80,12 @@ class MenuManager:
                     lang_action.setChecked(True)
         
         file_menu.addSeparator()
-    
+
+        # quit app
+        quit_action = file_menu.addAction("Quit")
+        quit_action.setShortcut("Ctrl+Q")
+        quit_action.triggered.connect(self.main_window.close)
+
     def _setup_edit_menu(self):
         """Setup Edit menu"""
         edit_menu = self.menubar.addMenu("Edit")
@@ -118,32 +124,31 @@ class MenuManager:
         help_action.setShortcut("F1")
         help_action.triggered.connect(self.main_window._show_help)
         
-        # Check for updates
-        updates_action = help_menu.addAction("Check for Updates")
-        updates_action.triggered.connect(self.main_window._check_for_updates)
-        
+        # Documentation
+        docs_action = help_menu.addAction("Documentation")
+        docs_action.setShortcut("F2")
+        docs_action.triggered.connect(self.main_window._open_documentation)       
+       
         help_menu.addSeparator()
         
         # About
         about_action = help_menu.addAction("About")
         about_action.triggered.connect(self.main_window._show_about)
-        
-        # Version
-        version_action = help_menu.addAction("Version")
-        version_action.triggered.connect(self.main_window._show_version)
-        
+                
         # Sponsor
         sponsor_action = help_menu.addAction("Sponsor")
         sponsor_action.triggered.connect(self.main_window._show_sponsor)
         
+        help_menu.addSeparator()
+        
         # Report issue
         report_action = help_menu.addAction("Report Issue")
         report_action.triggered.connect(self.main_window._report_issue)
-        
-        # Documentation
-        docs_action = help_menu.addAction("Documentation")
-        docs_action.triggered.connect(self.main_window._open_documentation)
-        
+
+        # Check for updates
+        updates_action = help_menu.addAction("Check for Updates")
+        updates_action.triggered.connect(self.main_window._check_for_updates)
+                
         self.help_menu = help_menu
     
     def _change_theme(self, theme_name):

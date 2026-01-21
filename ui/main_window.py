@@ -27,7 +27,7 @@ from .sponsor import SponsorDialog
 from core.dns_server import DNSServer
 from core.config import Config
 from core.dns_records import DNSRecord, DNSRecordType
-from core import get_version_string
+from core import get_version_string, get_version_info
 from .themes import theme_manager
 
 class MainWindow(QMainWindow):
@@ -420,6 +420,39 @@ class MainWindow(QMainWindow):
                 QMessageBox.critical(self, "Export Failed", f"Failed to export configuration: {e}")
                 self.logger.error(f"Failed to export configuration: {e}")
     
+    def _import_configuration(self):
+        """Import configuration from file"""
+        from PySide6.QtWidgets import QFileDialog
+        import json
+        
+        file_path, _ = QFileDialog.getOpenFileName(
+            self, "Import Configuration", "", "JSON Files (*.json);;All Files (*)"
+        )
+        
+        if file_path:
+            try:
+                with open(file_path, 'r') as f:
+                    config_data = json.load(f)
+                
+                # Apply configuration
+                if 'dns_port' in config_data:
+                    self.config.dns_port = config_data['dns_port']
+                if 'bind_address' in config_data:
+                    self.config.bind_address = config_data['bind_address']
+                if 'timeout' in config_data:
+                    self.config.timeout = config_data['timeout']
+                if 'max_connections' in config_data:
+                    self.config.max_connections = config_data['max_connections']
+                if 'log_level' in config_data:
+                    self.config.log_level = config_data['log_level']
+                
+                QMessageBox.information(self, "Import Successful", f"Configuration imported from {file_path}")
+                self.logger.info(f"Configuration imported from {file_path}")
+                
+            except Exception as e:
+                QMessageBox.critical(self, "Import Failed", f"Failed to import configuration: {e}")
+                self.logger.error(f"Failed to import configuration: {e}")
+    
     def _clear_logs(self):
         """Clear application logs"""
         reply = QMessageBox.question(
@@ -433,10 +466,6 @@ class MainWindow(QMainWindow):
             self.logs_widget.clear_logs()
             self.status_bar.showMessage("Logs cleared")
     
-    def _export_configuration(self):
-        """Export current configuration"""
-        QMessageBox.information(self, "Export Configuration", "Configuration export will be implemented in future versions.")
-    
     def _show_help(self):
         """Show help dialog"""
         help_dialog = HelpDialog(self)
@@ -449,7 +478,7 @@ class MainWindow(QMainWindow):
     
     def _show_version(self):
         """Show version information"""
-        version_info = version.get_version_info()
+        version_info = get_version_info()
         version_text = f"""
 {version_info['app_name']} v{version_info['version']}
 
@@ -468,3 +497,19 @@ Email: {version_info['email']}
         """Show sponsor dialog"""
         sponsor_dialog = SponsorDialog(self)
         sponsor_dialog.exec()
+    
+    def _check_for_updates(self):
+        """Check for application updates"""
+        QMessageBox.information(self, "Check for Updates", "Update checking will be implemented in future versions.")
+    
+    def _report_issue(self):
+        """Report an issue"""
+        QMessageBox.information(self, "Report Issue", "Issue reporting will be implemented in future versions.")
+    
+    def _open_documentation(self):
+        """Open documentation"""
+        QMessageBox.information(self, "Documentation", "Documentation will be implemented in future versions.")
+    
+    def _show_server_diagnostics(self):
+        """Show server diagnostics"""
+        QMessageBox.information(self, "Server Diagnostics", "Server diagnostics will be implemented in future versions.")
