@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tests for Configuration management functionality
+Test for Configuration management functionality
 """
 
 import pytest

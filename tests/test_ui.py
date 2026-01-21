@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tests for UI components functionality
+Test for UI components functionality
 """
 
 import pytest

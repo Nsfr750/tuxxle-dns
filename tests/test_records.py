@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tests for DNS Records functionality
+Test for DNS Records functionality
 """
 
 import pytest
