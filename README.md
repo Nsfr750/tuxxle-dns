@@ -1,238 +1,247 @@
 # DNS Server Manager
 
-Un server DNS completo con pannello di gestione grafico per Windows, sviluppato con PySide6.
+A comprehensive DNS server management tool with graphical interface, built with PySide6 and Python.
 
-## Caratteristiche
+## Features
 
-### Funzionalità del Server DNS
+### DNS Server Capabilities
 
-- **Server DNS UDP completo**: Implementazione nativa del protocollo DNS
-- **Supporto per record multipli**: A, AAAA, CNAME, MX, TXT, NS, SOA, PTR
-- **Gestione connessioni multiple**: Supporto per query simultanee
-- **Configurazione flessibile**: Porta, indirizzo di bind, timeout personalizzabili
-- **Logging dettagliato**: Tracciamento completo delle query e risposte
+- **Complete UDP DNS Server**: Native DNS protocol implementation
+- **Multiple Record Support**: A, AAAA, CNAME, MX, TXT, NS, SOA, PTR records
+- **Multiple Connection Handling**: Support for simultaneous queries
+- **Flexible Configuration**: Customizable port, bind address, timeout settings
+- **Detailed Logging**: Complete query and response tracking
 
-### Interfaccia Grafica
+### Graphical Interface
 
-- **Pannello di gestione intuitivo**: Interfaccia moderna con PySide6
-- **Gestione record DNS**: Aggiungi, modifica, elimina record DNS
-- **Monitoraggio in tempo reale**: Statistiche e metriche del server
-- **Configurazione grafica**: Impostazioni del server tramite interfaccia
-- **Visualizzazione log**: Logs in tempo reale con filtri e export
+- **Intuitive Management Panel**: Modern interface with PySide6
+- **DNS Record Management**: Add, edit, delete DNS records
+- **Real-time Monitoring**: Server statistics and metrics
+- **Graphical Configuration**: Server settings via interface
+- **Log Visualization**: Real-time logs with filters and export
 
-### Sicurezza e Affidabilità
+### Security and Reliability
 
-- **Validazione input**: Controllo rigoroso dei record DNS
-- **Gestione errori**: Robusta gestione delle eccezioni
-- **Logging completo**: Tracciamento di tutte le attività
-- **Threading sicuro**: Gestione concorrente delle query
+- **Input Validation**: Rigorous DNS record control
+- **Error Handling**: Robust exception management
+- **Complete Logging**: Activity tracking
+- **Secure Threading**: Concurrent query management
 
-## Installazione
+## Installation
 
-### Prerequisiti
+### Prerequisites
 
-- Python 3.8 o superiore
-- Windows 10/11 (raccomandato)
-- Privilegi di amministratore (per la porta 53)
+- Python 3.11 or higher
+- Windows 10/11 (recommended)
+- Administrator privileges (for port 53)
 
-### Installazione Automatica
+### Quick Start
 
 ```bash
-# Clona il repository
-git clone https://github.com/Nsfr750/dns-server-manager.git
-cd dns-server-manager
+# Clone the repository
+git clone https://github.com/Nsfr750/tuxxle-dns.git
+cd tuxxle-dns
 
-# Installa le dipendenze
+# Install dependencies
 pip install -r requirements.txt
 
-# Oppure installa in modalità development
-pip install -e .
+# Run the application
+python main.py
 ```
 
-### Installazione Manuale
+### Manual Installation
 
 ```bash
-# Installa PySide6
-pip install PySide6>=6.6.0
+# Install PySide6
+pip install PySide6>=6.10.0
 
-# Installa il pacchetto
+# Install the package
 python setup.py install
 ```
 
-## Utilizzo
+## Usage
 
-### Avvio del Server
+### Starting the Application
 
 ```bash
-# Avvia l'interfaccia grafica
+# Launch the GUI
 python main.py
 
-# Oppure usando lo script installato
-dns-server-gui
+# Or using the installed script
+tuxxle-dns-gui
 ```
 
-### Configurazione Iniziale
+### Initial Configuration
 
-1. **Avvio**: Lancia l'applicazione con privilegi di amministratore
-2. **Configurazione**: Usa la tab "Configuration" per impostare porta e indirizzo
-3. **Avvio Server**: Clicca "Start Server" per avviare il server DNS
-4. **Gestione Record**: Usa la tab "DNS Records" per aggiungere record personalizzati
+1. **Launch**: Start the application with administrator privileges
+2. **Configure**: Use the "Configuration" tab to set port and bind address
+3. **Start Server**: Click "Start Server" to start the DNS server
+4. **Manage Records**: Use the "DNS Records" tab to add custom records
 
-### Gestione Record DNS
+### DNS Record Management
 
-- **Record A**: `example.com -> 192.168.1.1`
-- **Record AAAA**: `example.com -> 2001:db8::1`
-- **Record CNAME**: `www.example.com -> example.com`
-- **Record MX**: `example.com -> 10 mail.example.com`
+- **A Records**: `example.com -> 192.168.1.1`
+- **AAAA Records**: `example.com -> 2001:db8::1`
+- **CNAME Records**: `www.example.com -> example.com`
+- **MX Records**: `example.com -> 10 mail.example.com`
 
-## Struttura del Progetto
+## Project Structure
 
 ```text
-dns-server-manager/
-├── main.py                 # Entry point principale
-├── core/                   # Funzionalità del server
+tuxxle-dns/
+├── main.py                 # Application entry point
+├── config.json             # Default configuration file
+├── version.py              # Version information
+├── about.py               # About dialog
+├── help.py                # Help dialog
+├── sponsor.py             # Sponsor dialog
+├── core/                  # Core functionality
 │   ├── __init__.py
-│   ├── dns_server.py       # Server DNS implementation
+│   ├── dns_server.py       # DNS server implementation
 │   ├── dns_records.py      # DNS record types
-│   └── config.py           # Configuration management
-├── ui/                     # Interfaccia grafica
+│   ├── config.py           # Configuration management
+│   └── database.py         # Database operations
+├── ui/                    # User interface
 │   ├── __init__.py
 │   ├── main_window.py      # Main application window
 │   ├── records_widget.py   # DNS records management
 │   ├── stats_widget.py     # Statistics display
 │   ├── config_widget.py    # Configuration interface
 │   └── logs_widget.py      # Log viewer
-├── requirements.txt        # Python dependencies
-├── setup.py               # Installation script
-└── README.md              # This file
+├── tests/                 # Test suite
+├── docs/                  # Documentation
+├── assets/                 # Static assets
+│   ├── icons/            # Application icons
+│   └── images/           # Images and logos
+└── requirements.txt        # Python dependencies
 ```
 
-## Configurazione
+## Configuration
 
-### Impostazioni del Server
+### Server Settings
 
-- **Porta DNS**: Default 53 (richiede privilegi di amministratore)
-- **Bind Address**: Default 0.0.0.0 (tutte le interfacce)
-- **Timeout Query**: Default 5 secondi
-- **Max Connessioni**: Default 1000
+- **DNS Port**: Default 53 (requires administrator privileges)
+- **Bind Address**: Default 0.0.0.0 (all interfaces)
+- **Query Timeout**: Default 5 seconds
+- **Max Connections**: Default 1000
 
 ### Logging
 
-- **Livello Log**: DEBUG, INFO, WARNING, ERROR, CRITICAL
-- **File Log**: dns_server.log
-- **Rotazione Log**: Automatica con dimensione massima
-- **Preview Log**: Visualizzazione in tempo reale nell'interfaccia
+- **Log Level**: DEBUG, INFO, WARNING, ERROR, CRITICAL
+- **Log File**: dns_server.log
+- **Log Rotation**: Automatic with maximum size
+- **Real-time Preview**: Live log viewing in interface
 
-## Utilizzo Avanzato
+## Advanced Usage
 
-### Record DNS Supportati
+### Supported DNS Records
 
-#### Record A (IPv4)
+#### A Records (IPv4)
 
 ```text
-Nome: server.local
-Tipo: A
-Valore: 192.168.1.100
+Name: server.local
+Type: A
+Value: 192.168.1.100
 TTL: 300
 ```
 
-#### Record AAAA (IPv6)
+#### AAAA Records (IPv6)
 
 ```text
-Nome: server.local
-Tipo: AAAA
-Valore: 2001:db8::100
+Name: server.local
+Type: AAAA
+Value: 2001:db8::100
 TTL: 300
 ```
 
-#### Record CNAME
+#### CNAME Records
 
 ```text
-Nome: www.local
-Tipo: CNAME
-Valore: server.local
+Name: www.local
+Type: CNAME
+Value: server.local
 TTL: 300
 ```
 
-#### Record MX
+#### MX Records
 
 ```text
-Nome: local
-Tipo: MX
-Valore: 10 mail.local
+Name: local
+Type: MX
+Value: 10 mail.local
 TTL: 300
 ```
 
-### Integrazione con Windows
+## Windows Integration
 
-1. **Servizio Windows**: Configura come servizio per avvio automatico
-2. **Firewall**: Aggiungi eccezioni per la porta DNS
-3. **Configurazione Rete**: Imposta il server DNS primario nelle impostazioni di rete
+1. **Windows Service**: Configure as service for automatic startup
+2. **Firewall**: Add exceptions for DNS port
+3. **Network Settings**: Set as primary DNS in network settings
 
-## Risoluzione Problemi
+## Troubleshooting
 
-### Porta 53 Già in Uso
+### Port 53 Already in Use
 
 ```bash
-# Controlla cosa usa la porta 53
+# Check what's using port 53
 netstat -ano | findstr :53
 
-# Ferma il servizio DNS di Windows se necessario
+# Stop Windows DNS service if needed
 net stop dnscache
 ```
 
-### Privilegi Insufficienti
+### Insufficient Privileges
 
-- Esegui come Amministratore
-- Controlla le policy di sicurezza
-- Verifica il firewall di Windows
+- Run as Administrator
+- Check security policies
+- Verify Windows firewall
 
-### Problemi di Rete
+### Network Issues
 
-- Controlla la configurazione IP
-- Verifica le regole del firewall
-- Testa con `nslookup` o `dig`
+- Check IP configuration
+- Verify firewall rules
+- Test with `nslookup` or `dig`
 
-## Sviluppo
+## Development
 
-### Ambiente di Sviluppo
+### Development Environment
 
 ```bash
-# Installa dipendenze di sviluppo
+# Install development dependencies
 pip install -r requirements.txt
 pip install -e .
 
-# Esegui test
+# Run tests
 python -m pytest tests/
 
-# Formatta codice
+# Format code
 black .
 ```
 
-### Estensioni
+### Extensions
 
-- Aggiungi nuovi tipi di record DNS
-- Implementa DNSSEC
-- Aggiungi interfaccia web
-- Supporto per clustering
+- Add new DNS record types
+- Implement DNSSEC
+- Add web interface
+- Support for clustering
 
-## Licenza
+## License
 
-Questo progetto è distribuito sotto licenza GPLv3. Vedi il file LICENSE per dettagli.
+This project is distributed under the GPLv3 license. See the LICENSE file for details.
 
-## Supporto
+## Support
 
-- **Issues**: [GitHub Issues](https://github.com/Nsfr750/issues)
-- **Email**: nsfr750@yandex.com
-- **Website**: https://www.tuxxle.org
-- **Security**: info@tuxxle.org
+- **Issues**: [GitHub Issues](https://github.com/Nsfr750/tuxxle-dns/issues)
+- **Email**: <mailto:nsfr750@yandex.com>
+- **Website**: <https://www.tuxxle.org>
+- **Security**: <mailto:security@tuxxle.org>
 
-## Donazioni
+## Donations
 
-Se trovi utile questo progetto, considera una donazione:
+If you find this project useful, please consider a donation:
 
-- **PayPal**: https://paypal.me/3dmega
-- **Monero**: 47Jc6MC47WJVFhiQFYwHyBNQP5BEsjUPG6tc8R37FwcTY8K5Y3LvFzveSXoGiaDQSxDrnCUBJ5WBj6Fgmsfix8VPD4w3gXF
+- **PayPal**: <https://paypal.me/3dmega>
+- **Monero**: `47Jc6MC47WJVFhiQFYwHyBNQP5BEsjUPG6tc8R37FwcTY8K5Y3LvFzveSXoGiaDQSxDrnCUBJ5WBj6Fgmsfix8VPD4w3gXF`
 
 ---
 

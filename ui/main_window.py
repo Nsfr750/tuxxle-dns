@@ -39,6 +39,7 @@ class MainWindow(QMainWindow):
         
         self.setWindowTitle("DNS Server Manager")
         self.setMinimumSize(1200, 800)
+        self.setWindowIcon(QIcon("assets/icons/icon.ico"))
         
         # Setup UI
         self._setup_theme()

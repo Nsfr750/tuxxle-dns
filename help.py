@@ -39,10 +39,10 @@ class HelpDialog(QDialog):
 DNS SERVER MANAGER - USER GUIDE
 
 GETTING STARTED:
-1. Start the DNS server using the "Start Server" button
-2. Configure server settings in the Configuration tab
-3. Add DNS records in the DNS Records tab
-4. Monitor server activity in the Statistics and Logs tabs
+1. Start DNS server using "Start Server" button
+2. Configure server settings in Configuration tab
+3. Add DNS records in DNS Records tab
+4. Monitor server activity in Statistics and Logs tabs
 
 MAIN FEATURES:
 
@@ -83,7 +83,7 @@ MAIN FEATURES:
 MENU OPTIONS:
 
 • FILE MENU
-  - Exit: Close the application
+  - Exit: Close application
 
 • EDIT MENU
   - Preferences: Configure application settings
@@ -117,7 +117,8 @@ TROUBLESHOOTING:
   - Review system resources
 
 For additional support, visit: https://www.tuxxle.org
-Security reports: info@tuxxle.org
+Security reports: security@tuxxle.org
+General inquiries: info@tuxxle.org
 """
         help_text.setPlainText(help_content)
         layout.addWidget(help_text)
