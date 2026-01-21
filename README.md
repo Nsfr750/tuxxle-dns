@@ -1,14 +1,16 @@
 # DNS Server Manager
 
-![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![Version](https://img.shields.io/badge/Version-1.1.0-blue)
 ![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue)
-![GUI](https://img.shields.io/badge/GUI-PyQt6.6-blue)
+![GUI](https://img.shields.io/badge/GUI-PySide6.10-blue)
 ![License](https://img.shields.io/badge/License-GPLv3-blue)
 [![Issues](https://img.shields.io/github/issues/Nsfr750/tuxxle-dns)](https://github.com/Nsfr750/tuxxle-dns/issues)
+[![Tests](https://img.shields.io/badge/Tests-Pytest-blue)](https://github.com/Nsfr750/tuxxle-dns)
+[![Documentation](https://img.shields.io/badge/Documentation-Complete-blue)](https://github.com/Nsfr750/tuxxle-dns)
 
 ![ss](assets/images/logo_text.png)
 
-A comprehensive DNS server management tool with graphical interface, built with PySide6 and Python.
+A comprehensive DNS server management tool with graphical interface, built with PySide6 and Python. Features complete internationalization, comprehensive testing framework, and professional documentation.
 
 ## Features
 
@@ -27,6 +29,20 @@ A comprehensive DNS server management tool with graphical interface, built with 
 - **Real-time Monitoring**: Server statistics and metrics
 - **Graphical Configuration**: Server settings via interface
 - **Log Visualization**: Real-time logs with filters and export
+
+### Internationalization
+
+- **Multi-language Support**: English, Spanish, French, German, Italian
+- **Dynamic Language Switching**: Runtime language changes
+- **Translation Management**: Built-in translation system
+- **Extensible Language Framework**: Easy addition of new languages
+
+### Testing and Quality
+
+- **Comprehensive Test Suite**: Unit, integration, and E2E tests
+- **Automated Testing**: pytest-based testing framework
+- **Code Coverage**: Detailed test coverage reporting
+- **Quality Assurance**: Professional development standards
 
 ### Security and Reliability
 
@@ -99,29 +115,48 @@ tuxxle-dns-gui
 tuxxle-dns/
 ├── main.py                 # Application entry point
 ├── config.json             # Default configuration file
-├── version.py              # Version information
-├── about.py               # About dialog
-├── help.py                # Help dialog
-├── sponsor.py             # Sponsor dialog
-├── core/                  # Core functionality
+├── setup.py                # Package setup script
+├── requirements.txt        # Python dependencies
+├── CHANGELOG.md            # Version changelog
+├── README.md               # Project documentation
+├── core/                   # Core functionality
 │   ├── __init__.py
+│   ├── version.py          # Version information
 │   ├── dns_server.py       # DNS server implementation
 │   ├── dns_records.py      # DNS record types
 │   ├── config.py           # Configuration management
 │   └── database.py         # Database operations
-├── ui/                    # User interface
+├── ui/                     # User interface
 │   ├── __init__.py
 │   ├── main_window.py      # Main application window
 │   ├── records_widget.py   # DNS records management
 │   ├── stats_widget.py     # Statistics display
 │   ├── config_widget.py    # Configuration interface
-│   └── logs_widget.py      # Log viewer
-├── tests/                 # Test suite
-├── docs/                  # Documentation
-├── assets/                 # Static assets
-│   ├── icons/            # Application icons
-│   └── images/           # Images and logos
-└── requirements.txt        # Python dependencies
+│   ├── logs_widget.py      # Log viewer
+│   ├── about.py            # About dialog
+│   ├── help.py             # Help dialog
+│   ├── sponsor.py          # Sponsor dialog
+│   ├── menu.py             # Menu management
+│   └── themes.py           # Theme management
+├── lang/                   # Language management
+│   ├── __init__.py
+│   ├── language_manager.py  # Language detection and switching
+│   └── translations.py     # Translation strings
+├── tests/                  # Test suite
+│   ├── __init__.py
+│   ├── test_dns_server.py  # DNS server tests
+│   ├── test_records.py     # DNS record tests
+│   ├── test_config.py      # Configuration tests
+│   └── test_ui.py          # UI component tests
+├── docs/                   # Documentation
+│   ├── STYLE.md            # Code style guidelines
+│   ├── TESTING.md          # Testing procedures
+│   ├── TRANSLATION.md      # Translation system docs
+│   ├── UPDATING.md         # Update procedures
+│   └── VERSIONING.md       # Versioning strategy
+└── assets/                 # Static assets
+    ├── icons/              # Application icons
+    └── images/             # Images and logos
 ```
 
 ## Configuration
@@ -222,8 +257,14 @@ pip install -e .
 # Run tests
 python -m pytest tests/
 
+# Run tests with coverage
+python -m pytest tests/ --cov=core --cov=ui --cov-report=html
+
 # Format code
 black .
+
+# Type checking
+mypy .
 ```
 
 ### Extensions
@@ -232,6 +273,19 @@ black .
 - Implement DNSSEC
 - Add web interface
 - Support for clustering
+- Add new languages to translation system
+- Extend testing coverage
+- Implement plugin system
+
+### Documentation
+
+Comprehensive documentation is available in the `docs/` directory:
+
+- **STYLE.md**: Code style guidelines and development standards
+- **TESTING.md**: Testing philosophy and procedures
+- **TRANSLATION.md**: Translation system documentation
+- **UPDATING.md**: Update management and procedures
+- **VERSIONING.md**: Semantic versioning strategy
 
 ## License
 
@@ -242,7 +296,8 @@ This project is distributed under the GPLv3 license. See the LICENSE file for de
 - **Issues**: [GitHub Issues](https://github.com/Nsfr750/tuxxle-dns/issues)
 - **Email**: <mailto:nsfr750@yandex.com>
 - **Website**: <https://www.tuxxle.org>
-- **Security**: <mailto:security@tuxxle.org>
+- **Security**: <mailto:info@tuxxle.org>
+- **Documentation**: [Project Documentation](https://github.com/Nsfr750/tuxxle-dns/tree/main/docs)
 
 ## Donations
 
