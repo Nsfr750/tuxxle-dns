@@ -1,5 +1,7 @@
 # DNS Server Manager
 
+![Logo](assets/images/logo-text.png)
+
 A comprehensive DNS server management tool with graphical interface, built with PySide6 and Python.
 
 ## Features
