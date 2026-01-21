@@ -348,7 +348,365 @@ class Translations:
             'help.title': 'Hilfe',
         }
         
-        # Italian translations
+        # Portuguese translations
+        self.translations_data['pt'] = {
+            'menu.title': 'Gerenciador de Servidor DNS',
+            'menu.start_server': 'Iniciar Servidor DNS',
+            'menu.stop_server': 'Parar Servidor DNS',
+            'menu.restart_server': 'Reiniciar Servidor DNS',
+            'menu.settings': 'Configurações',
+            'menu.about': 'Sobre',
+            'menu.help': 'Ajuda',
+            'menu.exit': 'Sair',
+            
+            'server.status.running': 'Servidor em execução',
+            'server.status.stopped': 'Servidor parado',
+            'server.status.starting': 'Iniciando servidor...',
+            'server.status.stopping': 'Parando servidor...',
+            'server.status.error': 'Erro do servidor',
+            
+            'button.save': 'Salvar',
+            'button.cancel': 'Cancelar',
+            'button.delete': 'Excluir',
+            'button.edit': 'Editar',
+            'button.add': 'Adicionar',
+            'button.close': 'Fechar',
+            'button.ok': 'OK',
+            
+            'msg.success.saved': 'Salvo com sucesso',
+            'msg.success.deleted': 'Excluído com sucesso',
+            'msg.error.save': 'Falha ao salvar',
+            'msg.error.delete': 'Falha ao excluir',
+            
+            'settings.title': 'Configurações',
+            'settings.language': 'Idioma',
+            'about.title': 'Sobre o Gerenciador DNS',
+            'help.title': 'Ajuda',
+        }
+        
+        # Russian translations
+        self.translations_data['ru'] = {
+            'menu.title': 'Менеджер DNS-сервера',
+            'menu.start_server': 'Запустить DNS-сервер',
+            'menu.stop_server': 'Остановить DNS-сервер',
+            'menu.restart_server': 'Перезапустить DNS-сервер',
+            'menu.settings': 'Настройки',
+            'menu.about': 'О программе',
+            'menu.help': 'Справка',
+            'menu.exit': 'Выход',
+            
+            'server.status.running': 'Сервер запущен',
+            'server.status.stopped': 'Сервер остановлен',
+            'server.status.starting': 'Запуск сервера...',
+            'server.status.stopping': 'Остановка сервера...',
+            'server.status.error': 'Ошибка сервера',
+            
+            'button.save': 'Сохранить',
+            'button.cancel': 'Отмена',
+            'button.delete': 'Удалить',
+            'button.edit': 'Изменить',
+            'button.add': 'Добавить',
+            'button.close': 'Закрыть',
+            'button.ok': 'ОК',
+            
+            'msg.success.saved': 'Успешно сохранено',
+            'msg.success.deleted': 'Успешно удалено',
+            'msg.error.save': 'Ошибка сохранения',
+            'msg.error.delete': 'Ошибка удаления',
+            
+            'settings.title': 'Настройки',
+            'settings.language': 'Язык',
+            'about.title': 'О программе',
+            'help.title': 'Справка',
+        }
+        
+        # Japanese translations
+        self.translations_data['ja'] = {
+            'menu.title': 'DNSサーバーマネージャー',
+            'menu.start_server': 'DNSサーバーを開始',
+            'menu.stop_server': 'DNSサーバーを停止',
+            'menu.restart_server': 'DNSサーバーを再起動',
+            'menu.settings': '設定',
+            'menu.about': 'について',
+            'menu.help': 'ヘルプ',
+            'menu.exit': '終了',
+            
+            'server.status.running': 'サーバーが実行中',
+            'server.status.stopped': 'サーバーが停止中',
+            'server.status.starting': 'サーバーを開始中...',
+            'server.status.stopping': 'サーバーを停止中...',
+            'server.status.error': 'サーバーエラー',
+            
+            'button.save': '保存',
+            'button.cancel': 'キャンセル',
+            'button.delete': '削除',
+            'button.edit': '編集',
+            'button.add': '追加',
+            'button.close': '閉じる',
+            'button.ok': 'OK',
+            
+            'msg.success.saved': '正常に保存されました',
+            'msg.success.deleted': '正常に削除されました',
+            'msg.error.save': '保存に失敗しました',
+            'msg.error.delete': '削除に失敗しました',
+            
+            'settings.title': '設定',
+            'settings.language': '言語',
+            'about.title': 'について',
+            'help.title': 'ヘルプ',
+        }
+        
+        # Chinese translations
+        self.translations_data['zh'] = {
+            'menu.title': 'DNS服务器管理器',
+            'menu.start_server': '启动DNS服务器',
+            'menu.stop_server': '停止DNS服务器',
+            'menu.restart_server': '重启DNS服务器',
+            'menu.settings': '设置',
+            'menu.about': '关于',
+            'menu.help': '帮助',
+            'menu.exit': '退出',
+            
+            'server.status.running': '服务器正在运行',
+            'server.status.stopped': '服务器已停止',
+            'server.status.starting': '正在启动服务器...',
+            'server.status.stopping': '正在停止服务器...',
+            'server.status.error': '服务器错误',
+            
+            'button.save': '保存',
+            'button.cancel': '取消',
+            'button.delete': '删除',
+            'button.edit': '编辑',
+            'button.add': '添加',
+            'button.close': '关闭',
+            'button.ok': '确定',
+            
+            'msg.success.saved': '保存成功',
+            'msg.success.deleted': '删除成功',
+            'msg.error.save': '保存失败',
+            'msg.error.delete': '删除失败',
+            
+            'settings.title': '设置',
+            'settings.language': '语言',
+            'about.title': '关于',
+            'help.title': '帮助',
+        }
+        
+        # Arabic translations
+        self.translations_data['ar'] = {
+            'menu.title': 'مدير خادم DNS',
+            'menu.start_server': 'بدء تشغيل خادم DNS',
+            'menu.stop_server': 'إيقاف خادم DNS',
+            'menu.restart_server': 'إعادة تشغيل خادم DNS',
+            'menu.settings': 'الإعدادات',
+            'menu.about': 'حول',
+            'menu.help': 'مساعدة',
+            'menu.exit': 'خروج',
+            
+            'server.status.running': 'خادم DNS قيد التشغيل',
+            'server.status.stopped': 'خادم DNS متوقف',
+            'server.status.starting': 'جاري بدء تشغيل خادم DNS...',
+            'server.status.stopping': 'جاري إيقاف خادم DNS...',
+            'server.status.error': 'خطأ في خادم DNS',
+            
+            'button.save': 'حفظ',
+            'button.cancel': 'إلغاء',
+            'button.delete': 'حذف',
+            'button.edit': 'تحرير',
+            'button.add': 'إضافة',
+            'button.close': 'إغلاق',
+            'button.ok': 'موافق',
+            
+            'msg.success.saved': 'تم الحفظ بنجاح',
+            'msg.success.deleted': 'تم الحذف بنجاح',
+            'msg.error.save': 'فشل الحفظ',
+            'msg.error.delete': 'فشل الحذف',
+            
+            'settings.title': 'الإعدادات',
+            'settings.language': 'اللغة',
+            'about.title': 'حول',
+            'help.title': 'مساعدة',
+        }
+        
+        # Hindi translations
+        self.translations_data['hi'] = {
+            'menu.title': 'DNS सर्वर प्रबंधक',
+            'menu.start_server': 'DNS सर्वर प्रारंभ करें',
+            'menu.stop_server': 'DNS सर्वर रोकें',
+            'menu.restart_server': 'DNS सर्वर पुनः चालू करें',
+            'menu.settings': 'सेटिंग्स',
+            'menu.about': 'के बारे में',
+            'menu.help': 'सहायता',
+            'menu.exit': 'बाहर निकलें',
+            
+            'server.status.running': 'DNS सर्वर चल रहा है',
+            'server.status.stopped': 'DNS सर्वर रुका हुआ है',
+            'server.status.starting': 'DNS सर्वर प्रारंभ हो रहा है...',
+            'server.status.stopping': 'DNS सर्वर बंद हो रहा है...',
+            'server.status.error': 'DNS सर्वर त्रुटि',
+            
+            'button.save': 'सहेजें',
+            'button.cancel': 'रद्द करें',
+            'button.delete': 'हटाएं',
+            'button.edit': 'संपादित करें',
+            'button.add': 'जोड़ें',
+            'button.close': 'बंद करें',
+            'button.ok': 'ठीक है',
+            
+            'msg.success.saved': 'सफलतापूर्व सहेजा गया',
+            'msg.success.deleted': 'सफलतापूर्व हटाया गया',
+            'msg.error.save': 'सहेजने में विफलत',
+            'msg.error.delete': 'हटाने में विफलत',
+            
+            'settings.title': 'सेटिंग्स',
+            'settings.language': 'भाषा',
+            'about.title': 'के बारे में',
+            'help.title': 'सहायता',
+        }
+        
+        # Korean translations
+        self.translations_data['ko'] = {
+            'menu.title': 'DNS 서버 관리자',
+            'menu.start_server': 'DNS 서버 시작',
+            'menu.stop_server': 'DNS 서버 중지',
+            'menu.restart_server': 'DNS 서버 재시작',
+            'menu.settings': '설정',
+            'menu.about': '정보',
+            'menu.help': '도움말',
+            'menu.exit': '종료',
+            
+            'server.status.running': '서버 실행 중',
+            'server.status.stopped': '서버 중지됨',
+            'server.status.starting': '서버 시작 중...',
+            'server.status.stopping': '서버 중지 중...',
+            'server.status.error': '서버 오류',
+            
+            'button.save': '저장',
+            'button.cancel': '취소',
+            'button.delete': '삭제',
+            'button.edit': '편집',
+            'button.add': '추가',
+            'button.close': '닫기',
+            'button.ok': '확인',
+            
+            'msg.success.saved': '성공적으로 저장됨',
+            'msg.success.deleted': '성공적으로 삭제됨',
+            'msg.error.save': '저장 실패',
+            'msg.error.delete': '삭제 실패',
+            
+            'settings.title': '설정',
+            'settings.language': '언어',
+            'about.title': '정보',
+            'help.title': '도움말',
+        }
+        
+        # Dutch translations
+        self.translations_data['nl'] = {
+            'menu.title': 'DNS Server Beheerder',
+            'menu.start_server': 'Start DNS Server',
+            'menu.stop_server': 'Stop DNS Server',
+            'menu.restart_server': 'Herstart DNS Server',
+            'menu.settings': 'Instellingen',
+            'menu.about': 'Over',
+            'menu.help': 'Help',
+            'menu.exit': 'Afsluiten',
+            
+            'server.status.running': 'Server draait',
+            'server.status.stopped': 'Server gestopt',
+            'server.status.starting': 'Server wordt gestart...',
+            'server.status.stopping': 'Server wordt gestopt...',
+            'server.status.error': 'Server fout',
+            
+            'button.save': 'Opslaan',
+            'button.cancel': 'Annuleren',
+            'button.delete': 'Verwijderen',
+            'button.edit': 'Bewerken',
+            'button.add': 'Toevoegen',
+            'button.close': 'Sluiten',
+            'button.ok': 'OK',
+            
+            'msg.success.saved': 'Succesvol opgeslagen',
+            'msg.success.deleted': 'Succesvol verwijderd',
+            'msg.error.save': 'Opslaan mislukt',
+            'msg.error.delete': 'Verwijderen mislukt',
+            
+            'settings.title': 'Instellingen',
+            'settings.language': 'Taal',
+            'about.title': 'Over',
+            'help.title': 'Help',
+        }
+        
+        # Polish translations
+        self.translations_data['pl'] = {
+            'menu.title': 'Menedżer Serwera DNS',
+            'menu.start_server': 'Uruchom Serwer DNS',
+            'menu.stop_server': 'Zatrzymaj Serwer DNS',
+            'menu.restart_server': 'Uruchom ponownie Serwer DNS',
+            'menu.settings': 'Ustawienia',
+            'menu.about': 'O programie',
+            'menu.help': 'Pomoc',
+            'menu.exit': 'Wyjdź',
+            
+            'server.status.running': 'Serwer działa',
+            'server.status.stopped': 'Serwer zatrzymany',
+            'server.status.starting': 'Uruchamianie serwera...',
+            'server.status.stopping': 'Zatrzymywanie serwera...',
+            'server.status.error': 'Błąd serwera',
+            
+            'button.save': 'Zapisz',
+            'button.cancel': 'Anuluj',
+            'button.delete': 'Usuń',
+            'button.edit': 'Edytuj',
+            'button.add': 'Dodaj',
+            'button.close': 'Zamknij',
+            'button.ok': 'OK',
+            
+            'msg.success.saved': 'Pomyślnie zapisano',
+            'msg.success.deleted': 'Pomyślnie usunięto',
+            'msg.error.save': 'Błąd zapisu',
+            'msg.error.delete': 'Błąd usuwania',
+            
+            'settings.title': 'Ustawienia',
+            'settings.language': 'Język',
+            'about.title': 'O programie',
+            'help.title': 'Pomoc',
+        }
+        
+        # Turkish translations
+        self.translations_data['tr'] = {
+            'menu.title': 'DNS Sunucu Yöneticisi',
+            'menu.start_server': 'DNS Sunucusunu Başlat',
+            'menu.stop_server': 'DNS Sunucusunu Durdur',
+            'menu.restart_server': 'DNS Sunucusunu Yeniden Başlat',
+            'menu.settings': 'Ayarlar',
+            'menu.about': 'Hakkında',
+            'menu.help': 'Yardım',
+            'menu.exit': 'Çıkış',
+            
+            'server.status.running': 'Sunucu çalışıyor',
+            'server.status.stopped': 'Sunucu durdu',
+            'server.status.starting': 'Sunucu başlatılıyor...',
+            'server.status.stopping': 'Sunucu durduruluyor...',
+            'server.status.error': 'Sunucu hatası',
+            
+            'button.save': 'Kaydet',
+            'button.cancel': 'İptal',
+            'button.delete': 'Sil',
+            'button.edit': 'Düzenle',
+            'button.add': 'Ekle',
+            'button.close': 'Kapat',
+            'button.ok': 'Tamam',
+            
+            'msg.success.saved': 'Başarıyla kaydedildi',
+            'msg.success.deleted': 'Başarıyla silindi',
+            'msg.error.save': 'Kaydetme başarısız',
+            'msg.error.delete': 'Silme başarısız',
+            
+            'settings.title': 'Ayarlar',
+            'settings.language': 'Dil',
+            'about.title': 'Hakkında',
+            'help.title': 'Yardım',
+        }
         self.translations_data['it'] = {
             'menu.title': 'Gestore Server DNS',
             'menu.start_server': 'Avvia Server DNS',

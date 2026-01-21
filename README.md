@@ -114,7 +114,10 @@ tuxxle-dns-gui
 ```text
 tuxxle-dns/
 ├── main.py                 # Application entry point
-├── config.json             # Default configuration file
+├── config/                 # Configuration and data directory
+│   ├── config.json        # Default configuration file
+│   ├── dns_records.db     # DNS records database
+│   └── dns_server.log     # Application log file
 ├── setup.py                # Package setup script
 ├── requirements.txt        # Python dependencies
 ├── CHANGELOG.md            # Version changelog
@@ -171,7 +174,7 @@ tuxxle-dns/
 ### Logging
 
 - **Log Level**: DEBUG, INFO, WARNING, ERROR, CRITICAL
-- **Log File**: dns_server.log
+- **Log File**: config/dns_server.log
 - **Log Rotation**: Automatic with maximum size
 - **Real-time Preview**: Live log viewing in interface
 

@@ -1,0 +1,34 @@
+# CODEOWNERS file for DNS Server Manager
+# This file defines ownership rules for code review and approval
+
+# Global owners - can approve changes to any file
+* @Nsfr750
+
+# Directory-specific owners
+
+# Core DNS server functionality
+/core/ @Nsfr750
+
+# User interface components  
+/ui/ @Nsfr750
+
+# Configuration and build scripts
+/setup/ @Nsfr750
+
+# Documentation
+/docs/ @Nsfr750
+
+# Tests
+/tests/ @Nsfr750
+
+# Assets and resources
+/assets/ @Nsfr750
+
+# Language files
+/lang/ @Nsfr750
+
+# Configuration files
+/config/ @Nsfr750
+
+# GitHub Actions and CI/CD
+.github/ @Nsfr750

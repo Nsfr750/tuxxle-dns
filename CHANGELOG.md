@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Configuration Organization**: Centralized configuration files
+  - Moved `config.json` to `config/config.json` for better organization
+  - Moved `dns_records.db` to `config/dns_records.db` for centralized data storage
+  - Moved `dns_server.log` to `config/dns_server.log` for unified logging
+- **Code Ownership**: Added CODEOWNERS file for GitHub
+  - Defined ownership rules for code review and approval
+  - Global owner: @Nsfr750
+  - Directory-specific owners for all major project components
+
+### Changed
+
+- **Path Resolution**: Updated all file path references throughout codebase
+  - Updated `core/config.py` to use `config/config.json`
+  - Updated `core/database.py` to use `config/dns_records.db`
+  - Updated `main.py` to use `config/dns_server.log`
+  - Updated UI components to use new log file path
+  - Updated preferences and configuration dialogs for new paths
+
+### Fixed
+
+- **File Organization**: Resolved scattered configuration files
+- **Build System**: Improved Nuitka compilation compatibility
+  - Updated to Nuitka 2.4.8 for Python 3.12 compatibility
+  - Fixed dependency conflicts and assertion errors
+  - Enhanced build script error handling and logging
+
+## [1.1.0] - 2026-01-21
+
+### Added (1.1.0)
+
 - **Language Management System**: Complete internationalization support
   - `LanguageManager` class for language detection and switching
   - `Translations` class with built-in support for English, Spanish, French, German, Italian
@@ -43,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Export configuration placeholder
   - Preferences placeholder
 
-### Changed
+### Changed (1.1.0)
 
 - **Architecture Improvements**: Better code organization
   - Moved version management to core module for cleaner structure
@@ -67,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enhanced setup.py with better dependency management
   - Added comprehensive build documentation in BUILDING.md
 
-### Fixed
+### Fixed (1.1.0)
 
 - Logo loading issues in About dialog with proper path resolution
 - Asset loading for both development and packaged environments
