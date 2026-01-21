@@ -288,6 +288,9 @@ class MenuManager:
                 ]
                 
                 for i, (name, host, port) in enumerate(test_hosts):
+                    if self.isInterruptionRequested():
+                        break
+                        
                     self.progress.emit(int((i / len(test_hosts)) * 100))
                     
                     try:
@@ -304,10 +307,14 @@ class MenuManager:
                     except Exception as e:
                         results.append(f"✗ {name}: {host}:{port} - {str(e)}")
                     finally:
-                        sock.close()
+                        try:
+                            sock.close()
+                        except:
+                            pass
                 
-                self.progress.emit(100)
-                self.result.emit("\n".join(results))
+                if not self.isInterruptionRequested():
+                    self.progress.emit(100)
+                    self.result.emit("\n".join(results))
         
         dialog = QDialog(self.main_window)
         dialog.setWindowTitle("Network Test")
@@ -329,21 +336,40 @@ class MenuManager:
         test_button = QPushButton("Run Test")
         layout.addWidget(test_button)
         
+        # Store thread reference
+        current_thread = None
+        
         def run_test():
+            nonlocal current_thread
+            
+            # Stop any existing thread
+            if current_thread and current_thread.isRunning():
+                current_thread.requestInterruption()
+                current_thread.wait(1000)  # Wait up to 1 second
+            
             test_button.setEnabled(False)
             test_button.setText("Testing...")
             progress_bar.setValue(0)
             
-            thread = NetworkTestThread()
-            thread.progress.connect(progress_bar.setValue)
-            thread.result.connect(lambda result: (
+            current_thread = NetworkTestThread()
+            current_thread.progress.connect(progress_bar.setValue)
+            current_thread.result.connect(lambda result: (
                 results_text.setPlainText(result),
                 test_button.setEnabled(True),
                 test_button.setText("Run Test")
             ))
-            thread.start()
+            current_thread.start()
+        
+        def cleanup_thread():
+            nonlocal current_thread
+            if current_thread and current_thread.isRunning():
+                current_thread.requestInterruption()
+                current_thread.wait(1000)
         
         test_button.clicked.connect(run_test)
+        
+        # Cleanup when dialog is closed
+        dialog.finished.connect(cleanup_thread)
         
         dialog.exec()
     
