@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QMenuBar, QMenu
 )
 from PySide6.QtCore import Qt, QTimer, Signal
-from PySide6.QtGui import QFont, QIcon
+from PySide6.QtGui import QFont, QIcon, QAction
 
 from .records_widget import RecordsWidget
 from .stats_widget import StatsWidget
@@ -26,6 +26,7 @@ from about import AboutDialog
 from help import HelpDialog
 from sponsor import SponsorDialog
 import version
+from .themes import theme_manager
 
 class MainWindow(QMainWindow):
     """Main application window"""
@@ -40,6 +41,7 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(1200, 800)
         
         # Setup UI
+        self._setup_theme()
         self._setup_menu()
         self._setup_ui()
         self._setup_status_bar()
@@ -47,6 +49,15 @@ class MainWindow(QMainWindow):
         
         # Load initial state
         self._update_server_status()
+    
+    def _setup_theme(self):
+        """Setup application theme"""
+        # Get theme from config
+        theme_name = self.config.get("ui.theme", "light")
+        theme_manager.set_theme(theme_name)
+        
+        # Apply stylesheet
+        self.setStyleSheet(theme_manager.get_stylesheet())
     
     def _setup_menu(self):
         """Setup the application menu bar"""
@@ -63,6 +74,23 @@ class MainWindow(QMainWindow):
         preferences_action = edit_menu.addAction("Preferences")
         preferences_action.setShortcut("Ctrl+,")
         preferences_action.triggered.connect(self._show_preferences)
+        
+        # Theme submenu
+        theme_menu = edit_menu.addMenu("Theme")
+        light_theme_action = theme_menu.addAction("Light Theme")
+        light_theme_action.setCheckable(True)
+        light_theme_action.triggered.connect(lambda: self._change_theme("light"))
+        
+        dark_theme_action = theme_menu.addAction("Dark Theme")
+        dark_theme_action.setCheckable(True)
+        dark_theme_action.triggered.connect(lambda: self._change_theme("dark"))
+        
+        # Set current theme checked
+        current_theme = theme_manager.get_current_theme()
+        if current_theme == "light":
+            light_theme_action.setChecked(True)
+        else:
+            dark_theme_action.setChecked(True)
         
         # Tools menu
         tools_menu = menubar.addMenu("Tools")
@@ -261,6 +289,35 @@ Email: {version_info['email']}
         """Show sponsor dialog"""
         sponsor_dialog = SponsorDialog(self)
         sponsor_dialog.exec()
+    
+    def _change_theme(self, theme_name: str):
+        """Change application theme"""
+        try:
+            # Update theme manager
+            theme_manager.set_theme(theme_name)
+            
+            # Apply new stylesheet
+            self.setStyleSheet(theme_manager.get_stylesheet())
+            
+            # Update all widget themes
+            self.logs_widget.update_theme()
+            
+            # Update configuration
+            self.config.set("ui.theme", theme_name)
+            
+            # Update menu check states
+            for action in self.findChildren(QAction):
+                if action.text() in ["Light Theme", "Dark Theme"]:
+                    action.setChecked(False)
+                    if (theme_name == "light" and action.text() == "Light Theme") or \
+                       (theme_name == "dark" and action.text() == "Dark Theme"):
+                        action.setChecked(True)
+            
+            self.status_bar.showMessage(f"Theme changed to {theme_name}")
+            
+        except Exception as e:
+            self.logger.error(f"Error changing theme: {e}")
+            QMessageBox.critical(self, "Error", f"Failed to change theme: {e}")
     
     def closeEvent(self, event):
         """Handle window close event"""

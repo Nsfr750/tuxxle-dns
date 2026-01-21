@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt, QTimer, QThread, Signal
 from PySide6.QtGui import QFont, QTextCursor, QColor
+from .themes import theme_manager
 
 class LogMonitorThread(QThread):
     """Thread for monitoring log file changes"""
@@ -117,13 +118,9 @@ class LogsWidget(QWidget):
         self.log_display = QTextEdit()
         self.log_display.setReadOnly(True)
         self.log_display.setFont(QFont("Consolas", 9))
-        self.log_display.setStyleSheet("""
-            QTextEdit {
-                background-color: #1e1e1e;
-                color: #ffffff;
-                border: 1px solid #444;
-            }
-        """)
+        
+        # Apply theme-based styling
+        self._update_log_display_style()
         
         layout.addWidget(self.log_display)
         
@@ -165,20 +162,23 @@ class LogsWidget(QWidget):
     
     def _append_log_display(self, timestamp, level: str, message: str):
         """Append log entry to display"""
+        # Get theme colors
+        theme = theme_manager.get_theme()
+        
         # Format timestamp
         time_str = timestamp.strftime("%H:%M:%S")
         
         # Color based on level
         color = {
-            "DEBUG": "#888888",
-            "INFO": "#00ff00",
-            "WARNING": "#ffff00",
-            "ERROR": "#ff6600",
-            "CRITICAL": "#ff0000"
-        }.get(level, "#ffffff")
+            "DEBUG": theme['log_debug'],
+            "INFO": theme['log_info'],
+            "WARNING": theme['log_warning'],
+            "ERROR": theme['log_error'],
+            "CRITICAL": theme['log_critical']
+        }.get(level, theme['log_text'])
         
         # Format message
-        formatted_message = f'<span style="color: #888888">[{time_str}]</span> <span style="color: {color}; font-weight: bold;">{level}:</span> {message}<br>'
+        formatted_message = f'<span style="color: {theme["text_muted"]}">[{time_str}]</span> <span style="color: {color}; font-weight: bold;">{level}:</span> {message}<br>'
         
         # Add to display
         cursor = self.log_display.textCursor()
@@ -242,6 +242,21 @@ class LogsWidget(QWidget):
         except Exception as e:
             self.logger.error(f"Error exporting logs: {e}")
             self.status_label.setText(f"Export failed: {e}")
+    
+    def _update_log_display_style(self):
+        """Update log display styling based on current theme"""
+        theme = theme_manager.get_theme()
+        self.log_display.setStyleSheet(f"""
+            QTextEdit {{
+                background-color: {theme['log_bg']};
+                color: {theme['log_text']};
+                border: 1px solid {theme['border']};
+            }}
+        """)
+    
+    def update_theme(self):
+        """Update widget theme"""
+        self._update_log_display_style()
     
     def add_log(self, level: str, message: str):
         """Manually add a log entry"""

@@ -94,6 +94,10 @@ class Config:
         config[keys[-1]] = value
         self._save_config(self._config)
     
+    def save(self) -> None:
+        """Save current configuration to file"""
+        self._save_config(self._config)
+    
     @property
     def dns_port(self) -> int:
         return self.get("dns.port", 53)
