@@ -30,7 +30,7 @@ class Config:
         }
     }
     
-    def __init__(self, config_file: str = "config.json"):
+    def __init__(self, config_file: str = "config/config.json"):
         self.config_file = Path(config_file)
         self.logger = logging.getLogger(__name__)
         self._config = self._load_config()

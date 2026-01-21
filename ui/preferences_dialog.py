@@ -236,7 +236,7 @@ class PreferencesDialog(QDialog):
         self.log_level_combo.setCurrentText("INFO")
         log_layout.addRow("Log Level:", self.log_level_combo)
         
-        self.log_file_edit = QLineEdit("dns_server.log")
+        self.log_file_edit = QLineEdit("config/dns_server.log")
         self.log_browse_button = QPushButton("Browse...")
         self.log_browse_button.clicked.connect(self._browse_log_file)
         
@@ -376,7 +376,7 @@ class PreferencesDialog(QDialog):
         # Logging settings
         settings.beginGroup("logging")
         self.log_level_combo.setCurrentText(settings.value("log_level", "INFO", str))
-        self.log_file_edit.setText(settings.value("log_file", "dns_server.log", str))
+        self.log_file_edit.setText(settings.value("log_file", "config/dns_server.log", str))
         self.max_log_size_spinbox.setValue(settings.value("max_log_size", 10, int))
         self.log_backup_count_spinbox.setValue(settings.value("log_backup_count", 5, int))
         self.log_to_console_checkbox.setChecked(settings.value("log_to_console", True, bool))

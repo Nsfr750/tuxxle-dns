@@ -3,7 +3,7 @@
 Version information for DNS Server Manager
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __app_name__ = "DNS Server Manager"
 __author__ = "Nsfr750"
 __organization__ = "Tuxxle"

@@ -11,7 +11,7 @@ from .dns_records import DNSRecord, DNSRecordType
 class DNSSQLiteDatabase:
     """SQLite database for DNS records persistence"""
     
-    def __init__(self, db_path: str = "dns_records.db"):
+    def __init__(self, db_path: str = "config/dns_records.db"):
         self.db_path = Path(db_path)
         self.logger = logging.getLogger(__name__)
         

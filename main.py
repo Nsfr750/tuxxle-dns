@@ -19,7 +19,7 @@ def setup_logging():
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('dns_server.log'),
+            logging.FileHandler('config/dns_server.log'),
             logging.StreamHandler()
         ]
     )

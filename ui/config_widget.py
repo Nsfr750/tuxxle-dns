@@ -136,7 +136,7 @@ class ConfigWidget(QWidget):
         
         # Log file
         self.log_file_edit = QLineEdit()
-        self.log_file_edit.setText("dns_server.log")
+        self.log_file_edit.setText("config/dns_server.log")
         logging_layout.addRow("Log File:", self.log_file_edit)
         
         # Max file size
@@ -235,7 +235,7 @@ class ConfigWidget(QWidget):
             
             # Logging settings
             self.log_level_combo.setCurrentText(self.config.get("logging.level", "INFO"))
-            self.log_file_edit.setText(self.config.get("logging.file", "dns_server.log"))
+            self.log_file_edit.setText(self.config.get("logging.file", "config/dns_server.log"))
             self.max_size_spin.setValue(self.config.get("logging.max_size", 10485760))
             self.backup_count_spin.setValue(self.config.get("logging.backup_count", 5))
             

@@ -8,6 +8,7 @@ import os
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QApplication
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QPixmap
+from core.version import get_version_info
 
 class AboutDialog(QDialog):
     """About dialog showing application information"""
@@ -75,7 +76,7 @@ class AboutDialog(QDialog):
         layout.addWidget(title_label)
         
         # Version
-        version_label = QLabel("Version 1.0.0")
+        version_label = QLabel(f"Version {get_version_info()['version']}")
         version_font = QFont()
         version_font.setPointSize(12)
         version_label.setFont(version_font)
@@ -106,7 +107,7 @@ class AboutDialog(QDialog):
         # Website
         website_label = QLabel("Website: https://www.tuxxle.org")
         website_label.setAlignment(Qt.AlignCenter)
-        website_label.setStyleSheet("color: blue;")
+        website_label.setStyleSheet("color: green;")
         website_label.setTextInteractionFlags(Qt.TextBrowserInteraction)
         layout.addWidget(website_label)
         

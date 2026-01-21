@@ -139,7 +139,7 @@ class LogsWidget(QWidget):
     
     def _setup_log_monitor(self):
         """Setup log file monitoring"""
-        self.log_monitor = LogMonitorThread("dns_server.log")
+        self.log_monitor = LogMonitorThread("config/dns_server.log")
         self.log_monitor.new_log_entry.connect(self._add_log_entry)
         self.log_monitor.start()
     
