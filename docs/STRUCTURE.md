@@ -9,18 +9,17 @@ tuxxle-dns/
 ├── README.md                # Project overview and getting started guide
 ├── CHANGELOG.md             # Version history and changes
 ├── requirements.txt         # Python dependencies
-├── setup.py                 # Package setup and installation
 ├── main.py                  # Application entry point
-├── config.json              # Default configuration file
-├── version.py               # Version information and metadata
-├── about.py                 # About dialog implementation
-├── help.py                  # Help dialog implementation
-├── sponsor.py               # Sponsor dialog implementation
-├── dns_server.log           # Application log file (generated)
 │
+├── config/                  # Configuration files
+│   ├── config.json          # Default configuration file
+│   ├── dsn_records.db       # DNS records database
+│   └── dns_server.log       # DNS server log file (generated)
+|
 ├── core/                    # Core DNS server functionality
 │   ├── __init__.py
 │   ├── config.py            # Configuration management
+│   ├── version.py           # Version information
 │   ├── database.py          # Database operations and models
 │   ├── dns_records.py       # DNS record types and operations
 │   └── dns_server.py        # Main DNS server implementation
@@ -32,6 +31,12 @@ tuxxle-dns/
 │   ├── stats_widget.py      # Statistics display widget
 │   ├── config_widget.py     # Configuration management widget
 │   ├── logs_widget.py       # Log monitoring widget
+│   ├── preferences_dialog.py # Preferences configuration dialog
+|   ├── about.py             # About dialog
+|   ├── help.py              # Help dialog
+|   ├── sponsor.py           # Sponsor dialog
+|   ├── menu.py              # Menu bar
+|   ├── themes.py            # Theme management
 │   └── database_widget.py   # Database management widget
 │
 ├── lang/                    # Internationalization (future)
@@ -47,17 +52,23 @@ tuxxle-dns/
 │   └── test_ui.py           # UI component tests
 │
 ├── docs/                    # Documentation
-│   ├── STRUCTURE.md         # This file - project structure
+│   ├── __init__.py
+│   ├── API.md               # API documentation
+│   ├── BUILDING.md          # Building instructions
+│   ├── INSTALLATION.md      # Installation guide
 │   ├── ROADMAP.md           # Development roadmap
 │   ├── SECURITY.md          # Security information
-│   ├── API.md               # API documentation (future)
-│   ├── INSTALLATION.md      # Installation guide (future)
-│   └── USER_GUIDE.md        # User guide (future)
+│   ├── STRUCTURE.md         # This file - project structure
+│   ├── STYLE.md             # Code style guidelines
+│   ├── TESTING.md           # Testing guidelines
+│   ├── TRANSLATIONS.md      # Translations guide
+|   ├── UPDATING.md          # Updating guide
+│   ├── USER_GUIDE.md        # User guide
+│   └── VERSIONING.md        # Versioning guide
 │
 ├── setup/                   # Setup and maintenance scripts
 │   ├── clean_pycache.py     # Clean Python cache files
-│   ├── install_deps.py      # Install dependencies script
-│   └── TXT                  # Setup notes or temporary file
+|   └── setup.py             # Package setup and installation
 │
 └── assets/                  # Static assets (future)
     ├── icons/               # Application icons

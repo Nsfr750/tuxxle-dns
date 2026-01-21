@@ -113,53 +113,53 @@ tuxxle-dns-gui
 
 ```text
 tuxxle-dns/
-├── main.py                 # Application entry point
-├── config/                 # Configuration and data directory
-│   ├── config.json        # Default configuration file
-│   ├── dns_records.db     # DNS records database
-│   └── dns_server.log     # Application log file
-├── setup.py                # Package setup script
-├── requirements.txt        # Python dependencies
-├── CHANGELOG.md            # Version changelog
-├── README.md               # Project documentation
-├── core/                   # Core functionality
+├── main.py                  # Application entry point
+├── config/                  # Configuration and data directory
+│   ├── config.json          # Default configuration file
+│   ├── dns_records.db       # DNS records database
+│   └── dns_server.log       # Application log file
+├── setup.py                 # Package setup script
+├── requirements.txt         # Python dependencies
+├── CHANGELOG.md             # Version changelog
+├── README.md                # Project documentation
+├── core/                    # Core functionality
 │   ├── __init__.py
-│   ├── version.py          # Version information
-│   ├── dns_server.py       # DNS server implementation
-│   ├── dns_records.py      # DNS record types
-│   ├── config.py           # Configuration management
-│   └── database.py         # Database operations
-├── ui/                     # User interface
+│   ├── version.py           # Version information
+│   ├── dns_server.py        # DNS server implementation
+│   ├── dns_records.py       # DNS record types
+│   ├── config.py            # Configuration management
+│   └── database.py          # Database operations
+├── ui/                      # User interface
 │   ├── __init__.py
-│   ├── main_window.py      # Main application window
-│   ├── records_widget.py   # DNS records management
-│   ├── stats_widget.py     # Statistics display
-│   ├── config_widget.py    # Configuration interface
-│   ├── logs_widget.py      # Log viewer
-│   ├── about.py            # About dialog
-│   ├── help.py             # Help dialog
-│   ├── sponsor.py          # Sponsor dialog
-│   ├── menu.py             # Menu management
-│   └── themes.py           # Theme management
-├── lang/                   # Language management
+│   ├── main_window.py       # Main application window
+│   ├── records_widget.py    # DNS records management
+│   ├── stats_widget.py      # Statistics display
+│   ├── config_widget.py     # Configuration interface
+│   ├── logs_widget.py       # Log viewer
+│   ├── about.py             # About dialog
+│   ├── help.py              # Help dialog
+│   ├── sponsor.py           # Sponsor dialog
+│   ├── menu.py              # Menu management
+│   └── themes.py            # Theme management
+├── lang/                    # Language management
 │   ├── __init__.py
 │   ├── language_manager.py  # Language detection and switching
-│   └── translations.py     # Translation strings
-├── tests/                  # Test suite
+│   └── translations.py      # Translation strings
+├── tests/                   # Test suite
 │   ├── __init__.py
-│   ├── test_dns_server.py  # DNS server tests
-│   ├── test_records.py     # DNS record tests
-│   ├── test_config.py      # Configuration tests
-│   └── test_ui.py          # UI component tests
-├── docs/                   # Documentation
-│   ├── STYLE.md            # Code style guidelines
-│   ├── TESTING.md          # Testing procedures
-│   ├── TRANSLATION.md      # Translation system docs
-│   ├── UPDATING.md         # Update procedures
-│   └── VERSIONING.md       # Versioning strategy
-└── assets/                 # Static assets
-    ├── icons/              # Application icons
-    └── images/             # Images and logos
+│   ├── test_dns_server.py   # DNS server tests
+│   ├── test_records.py      # DNS record tests
+│   ├── test_config.py       # Configuration tests
+│   └── test_ui.py           # UI component tests
+├── docs/                    # Documentation
+│   ├── STYLE.md             # Code style guidelines
+│   ├── TESTING.md           # Testing procedures
+│   ├── TRANSLATION.md       # Translation system docs
+│   ├── UPDATING.md          # Update procedures
+│   └── VERSIONING.md        # Versioning strategy
+└── assets/                  # Static assets
+    ├── icons/               # Application icons
+    └── images/              # Images and logos
 ```
 
 ## Configuration
@@ -297,7 +297,6 @@ This project is distributed under the GPLv3 license. See the LICENSE file for de
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/Nsfr750/tuxxle-dns/issues)
-- **Email**: <mailto:nsfr750@yandex.com>
 - **Website**: <https://www.tuxxle.org>
 - **Security**: <mailto:info@tuxxle.org>
 - **Documentation**: [Project Documentation](https://github.com/Nsfr750/tuxxle-dns/tree/main/docs)
