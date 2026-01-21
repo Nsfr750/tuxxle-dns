@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
     QLabel, QPushButton, QTextEdit, QTableWidget, QTableWidgetItem,
     QHeaderView, QGroupBox, QFormLayout, QLineEdit, QSpinBox,
     QComboBox, QMessageBox, QStatusBar, QSplitter, QFrame,
-    QMenuBar, QMenu
+    QMenuBar, QMenu, QSystemTrayIcon, QStyle, QDialog
 )
 from PySide6.QtCore import Qt, QTimer, Signal
 from PySide6.QtGui import QFont, QIcon, QAction
@@ -19,12 +19,14 @@ from .stats_widget import StatsWidget
 from .config_widget import ConfigWidget
 from .logs_widget import LogsWidget
 from .database_widget import DatabaseWidget
+from .preferences_dialog import PreferencesDialog
+from .menu import MenuManager
+from .about import AboutDialog
+from .help import HelpDialog
+from .sponsor import SponsorDialog
 from core.dns_server import DNSServer
 from core.config import Config
 from core.dns_records import DNSRecord, DNSRecordType
-from about import AboutDialog
-from help import HelpDialog
-from sponsor import SponsorDialog
 import version
 from .themes import theme_manager
 
@@ -41,15 +43,146 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(1200, 800)
         self.setWindowIcon(QIcon("assets/icons/icon.ico"))
         
+        # Setup system tray
+        self._setup_system_tray()
+        
         # Setup UI
         self._setup_theme()
-        self._setup_menu()
+        self.menu_manager = MenuManager(self)
         self._setup_ui()
         self._setup_status_bar()
         self._setup_timer()
         
-        # Load initial state
+        # Load initial state and preferences
+        self._load_preferences()
         self._update_server_status()
+    
+    def _setup_system_tray(self):
+        """Setup system tray icon and menu"""
+        if not QSystemTrayIcon.isSystemTrayAvailable():
+            self.logger.warning("System tray is not available on this system")
+            return
+        
+        # Create tray icon
+        self.tray_icon = QSystemTrayIcon(self)
+        self.tray_icon.setIcon(QIcon("assets/icons/icon.ico"))
+        self.tray_icon.setToolTip("DNS Server Manager")
+        
+        # Create tray menu
+        tray_menu = QMenu()
+        
+        # Show/Hide action
+        self.show_action = QAction("Show", self)
+        self.show_action.triggered.connect(self.show)
+        tray_menu.addAction(self.show_action)
+        
+        # Hide action
+        self.hide_action = QAction("Hide to Tray", self)
+        self.hide_action.triggered.connect(self.hide_to_tray)
+        tray_menu.addAction(self.hide_action)
+        
+        tray_menu.addSeparator()
+        
+        # Server status action
+        self.status_action = QAction("Server: Stopped", self)
+        self.status_action.setEnabled(False)
+        tray_menu.addAction(self.status_action)
+        
+        tray_menu.addSeparator()
+        
+        # Exit action
+        exit_action = QAction("Exit", self)
+        exit_action.triggered.connect(self.force_close)
+        tray_menu.addAction(exit_action)
+        
+        # Set menu and show
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.activated.connect(self._tray_icon_activated)
+        self.tray_icon.show()
+        
+        self.logger.info("System tray initialized")
+    
+    def _tray_icon_activated(self, reason):
+        """Handle tray icon activation"""
+        if reason == QSystemTrayIcon.DoubleClick:
+            if self.isVisible():
+                self.hide_to_tray()
+            else:
+                self.show()
+        elif reason == QSystemTrayIcon.Trigger:
+            if not self.isVisible():
+                self.show()
+    
+    def hide_to_tray(self):
+        """Hide window to system tray"""
+        self.hide()
+        self.logger.info("Window hidden to system tray")
+    
+    def show_from_tray(self):
+        """Show window from system tray"""
+        self.show()
+        self.raise_()
+        self.activateWindow()
+        self.logger.info("Window shown from system tray")
+    
+    def update_tray_status(self, is_running):
+        """Update tray icon status"""
+        if hasattr(self, 'status_action'):
+            if is_running:
+                self.status_action.setText("Server: Running")
+                # QAction doesn't support setStyleSheet, use font instead
+                font = self.status_action.font()
+                font.setBold(True)
+                self.status_action.setFont(font)
+            else:
+                self.status_action.setText("Server: Stopped")
+                font = self.status_action.font()
+                font.setBold(True)
+                self.status_action.setFont(font)
+    
+    def closeEvent(self, event):
+        """Handle close event - minimize to tray or exit based on context"""
+        # Check if this is a force close (from tray menu) vs window close
+        from PySide6.QtWidgets import QSystemTrayIcon
+        
+        # If system tray is available and visible, minimize to tray
+        if QSystemTrayIcon.isSystemTrayAvailable() and hasattr(self, 'tray_icon') and self.tray_icon.isVisible():
+            # Check if this is called from tray menu (force close)
+            # We need to determine if this is a regular window close or tray menu close
+            if not hasattr(self, '_force_close'):
+                event.ignore()
+                self.hide_to_tray()
+                
+                # Show notification
+                self.tray_icon.showMessage(
+                    "DNS Server Manager",
+                    "Application minimized to system tray. Double-click to restore.",
+                    QSystemTrayIcon.Information,
+                    3000
+                )
+                return
+        
+        # If we get here, it's a force close from tray menu or no tray available
+        if self.dns_server.running:
+            reply = QMessageBox.question(
+                self, 'Confirm Exit',
+                'DNS Server is still running. Stop it and exit?',
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No
+            )
+            
+            if reply == QMessageBox.Yes:
+                self.dns_server.stop()
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            event.accept()
+    
+    def force_close(self):
+        """Force close the application (called from tray menu)"""
+        self._force_close = True
+        self.close()
     
     def _setup_theme(self):
         """Setup application theme"""
@@ -59,63 +192,6 @@ class MainWindow(QMainWindow):
         
         # Apply stylesheet
         self.setStyleSheet(theme_manager.get_stylesheet())
-    
-    def _setup_menu(self):
-        """Setup the application menu bar"""
-        menubar = self.menuBar()
-        
-        # File menu
-        file_menu = menubar.addMenu("File")
-        exit_action = file_menu.addAction("Exit")
-        exit_action.setShortcut("Ctrl+Q")
-        exit_action.triggered.connect(self.close)
-        
-        # Edit menu
-        edit_menu = menubar.addMenu("Edit")
-        preferences_action = edit_menu.addAction("Preferences")
-        preferences_action.setShortcut("Ctrl+,")
-        preferences_action.triggered.connect(self._show_preferences)
-        
-        # Theme submenu
-        theme_menu = edit_menu.addMenu("Theme")
-        light_theme_action = theme_menu.addAction("Light Theme")
-        light_theme_action.setCheckable(True)
-        light_theme_action.triggered.connect(lambda: self._change_theme("light"))
-        
-        dark_theme_action = theme_menu.addAction("Dark Theme")
-        dark_theme_action.setCheckable(True)
-        dark_theme_action.triggered.connect(lambda: self._change_theme("dark"))
-        
-        # Set current theme checked
-        current_theme = theme_manager.get_current_theme()
-        if current_theme == "light":
-            light_theme_action.setChecked(True)
-        else:
-            dark_theme_action.setChecked(True)
-        
-        # Tools menu
-        tools_menu = menubar.addMenu("Tools")
-        clear_logs_action = tools_menu.addAction("Clear Logs")
-        clear_logs_action.triggered.connect(self._clear_logs)
-        
-        export_config_action = tools_menu.addAction("Export Configuration")
-        export_config_action.triggered.connect(self._export_configuration)
-        
-        # Help menu
-        help_menu = menubar.addMenu("Help")
-        
-        help_action = help_menu.addAction("Help")
-        help_action.setShortcut("F1")
-        help_action.triggered.connect(self._show_help)
-        
-        about_action = help_menu.addAction("About")
-        about_action.triggered.connect(self._show_about)
-        
-        version_action = help_menu.addAction("Version")
-        version_action.triggered.connect(self._show_version)
-        
-        sponsor_action = help_menu.addAction("Sponsor")
-        sponsor_action.triggered.connect(self._show_sponsor)
     
     def _setup_ui(self):
         """Setup the main UI"""
@@ -177,6 +253,14 @@ class MainWindow(QMainWindow):
         self.stop_button.setEnabled(False)
         header_layout.addWidget(self.stop_button)
         
+        # Add minimize to tray button if system tray is available
+        if QSystemTrayIcon.isSystemTrayAvailable():
+            tray_button = QPushButton("📋")
+            tray_button.setToolTip("Minimize to System Tray")
+            tray_button.clicked.connect(self.hide_to_tray)
+            tray_button.setMaximumWidth(40)
+            header_layout.addWidget(tray_button)
+        
         # Server info
         info_label = QLabel(f"Port: {self.config.dns_port} | Bind: {self.config.bind_address}")
         info_label.setStyleSheet("color: gray;")
@@ -229,9 +313,11 @@ class MainWindow(QMainWindow):
         if self.dns_server.running:
             self.status_label.setText("Server Status: Running")
             self.status_label.setStyleSheet("font-weight: bold; color: green;")
+            self.update_tray_status(True)
         else:
             self.status_label.setText("Server Status: Stopped")
             self.status_label.setStyleSheet("font-weight: bold; color: red;")
+            self.update_tray_status(False)
     
     def _update_status(self):
         """Update all status displays"""
@@ -240,7 +326,99 @@ class MainWindow(QMainWindow):
     
     def _show_preferences(self):
         """Show preferences dialog"""
-        QMessageBox.information(self, "Preferences", "Preferences dialog will be implemented in future versions.")
+        dialog = PreferencesDialog(self)
+        if dialog.exec() == QDialog.Accepted:
+            # Apply preferences that affect the main window
+            settings = dialog.get_settings()
+            
+            # Apply theme
+            if 'ui' in settings and 'theme' in settings['ui']:
+                self.menu_manager._change_theme(settings['ui']['theme'])
+            
+            # Apply window settings
+            if 'ui' in settings:
+                ui_settings = settings['ui']
+                if 'always_on_top' in ui_settings:
+                    self.setWindowFlags(
+                        self.windowFlags() | Qt.WindowStaysOnTopHint if ui_settings['always_on_top']
+                        else self.windowFlags() & ~Qt.WindowStaysOnTopHint
+                    )
+                    self.show()
+            
+            self.logger.info("Preferences applied successfully")
+    
+    def _load_preferences(self):
+        """Load and apply preferences at startup"""
+        from PySide6.QtCore import QSettings
+        settings = QSettings()
+        
+        # Apply UI preferences
+        settings.beginGroup("ui")
+        
+        # Theme
+        theme = settings.value("theme", "light", str)
+        self.menu_manager._change_theme(theme)
+        
+        # Window behavior
+        always_on_top = settings.value("always_on_top", False, bool)
+        if always_on_top:
+            self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
+        
+        # Font size
+        font_size = settings.value("font_size", 10, int)
+        if font_size != 10:
+            font = self.font()
+            font.setPointSize(font_size)
+            self.setFont(font)
+        
+        settings.endGroup()
+        
+        # Apply general preferences
+        settings.beginGroup("general")
+        
+        # Start minimized
+        start_minimized = settings.value("start_minimized", False, bool)
+        if start_minimized and QSystemTrayIcon.isSystemTrayAvailable():
+            # Hide to tray after showing initially
+            QTimer.singleShot(100, self.hide_to_tray)
+        
+        settings.endGroup()
+        
+        self.logger.info("Startup preferences loaded")
+    
+    def _show_database_tools(self):
+        """Show database tools dialog"""
+        QMessageBox.information(self, "Database Tools", "Database tools dialog will be implemented in future versions.")
+    
+    def _export_configuration(self):
+        """Export current configuration"""
+        from PySide6.QtWidgets import QFileDialog
+        import json
+        
+        file_path, _ = QFileDialog.getSaveFileName(
+            self, "Export Configuration", "dns_config.json", "JSON Files (*.json);;All Files (*)"
+        )
+        
+        if file_path:
+            try:
+                config_data = {
+                    'dns_port': self.config.dns_port,
+                    'bind_address': self.config.bind_address,
+                    'timeout': self.config.timeout,
+                    'max_connections': self.config.max_connections,
+                    'log_level': self.config.log_level,
+                    'database_file': getattr(self.config, 'database_file', 'dns_records.db')
+                }
+                
+                with open(file_path, 'w') as f:
+                    json.dump(config_data, f, indent=2)
+                
+                QMessageBox.information(self, "Export Successful", f"Configuration exported to {file_path}")
+                self.logger.info(f"Configuration exported to {file_path}")
+                
+            except Exception as e:
+                QMessageBox.critical(self, "Export Failed", f"Failed to export configuration: {e}")
+                self.logger.error(f"Failed to export configuration: {e}")
     
     def _clear_logs(self):
         """Clear application logs"""
@@ -290,50 +468,3 @@ Email: {version_info['email']}
         """Show sponsor dialog"""
         sponsor_dialog = SponsorDialog(self)
         sponsor_dialog.exec()
-    
-    def _change_theme(self, theme_name: str):
-        """Change application theme"""
-        try:
-            # Update theme manager
-            theme_manager.set_theme(theme_name)
-            
-            # Apply new stylesheet
-            self.setStyleSheet(theme_manager.get_stylesheet())
-            
-            # Update all widget themes
-            self.logs_widget.update_theme()
-            
-            # Update configuration
-            self.config.set("ui.theme", theme_name)
-            
-            # Update menu check states
-            for action in self.findChildren(QAction):
-                if action.text() in ["Light Theme", "Dark Theme"]:
-                    action.setChecked(False)
-                    if (theme_name == "light" and action.text() == "Light Theme") or \
-                       (theme_name == "dark" and action.text() == "Dark Theme"):
-                        action.setChecked(True)
-            
-            self.status_bar.showMessage(f"Theme changed to {theme_name}")
-            
-        except Exception as e:
-            self.logger.error(f"Error changing theme: {e}")
-            QMessageBox.critical(self, "Error", f"Failed to change theme: {e}")
-    
-    def closeEvent(self, event):
-        """Handle window close event"""
-        if self.dns_server.running:
-            reply = QMessageBox.question(
-                self, 'Confirm Exit',
-                'DNS Server is still running. Stop it and exit?',
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
-            )
-            
-            if reply == QMessageBox.Yes:
-                self.dns_server.stop()
-                event.accept()
-            else:
-                event.ignore()
-        else:
-            event.accept()

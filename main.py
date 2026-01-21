@@ -30,6 +30,9 @@ def main():
     app.setApplicationName("DNS Server Manager")
     app.setOrganizationName("Tuxxle")
     
+    # Allow application to run without a window
+    app.setQuitOnLastWindowClosed(False)
+    
     setup_logging()
     logger = logging.getLogger(__name__)
     

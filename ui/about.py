@@ -32,12 +32,12 @@ class AboutDialog(QDialog):
             if hasattr(sys, 'frozen'):
                 # PyInstaller executable
                 base_path = sys._MEIPASS
-                logo_path = os.path.join(base_path, 'assets', 'images', 'logo-text.png')
+                logo_path = os.path.join(base_path, 'assets', 'images', 'logo_text.png')
             else:
                 # Regular Python execution
                 script_dir = os.path.dirname(os.path.abspath(__file__))
                 base_path = os.path.dirname(script_dir)  # Go up one level from ui/
-                logo_path = os.path.join(base_path, 'assets', 'images', 'logo-text.png')
+                logo_path = os.path.join(base_path, 'assets', 'images', 'logo_text.png')
             
             self.logger.info(f"Trying to load logo from: {logo_path}")
             

@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/License-GPLv3-blue)
 [![Issues](https://img.shields.io/github/issues/Nsfr750/tuxxle-dns)](https://github.com/Nsfr750/tuxxle-dns/issues)
 
-![ss](assets/images/logo-text.png)
+![ss](assets/images/logo_text.png)
 
 A comprehensive DNS server management tool with graphical interface, built with PySide6 and Python.
 
