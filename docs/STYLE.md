@@ -535,7 +535,7 @@ receive_query = Signal(str)
 
 Follow the Conventional Commits specification:
 
-```
+```text
 <type>[optional scope]: <description>
 
 [optional body]
@@ -555,7 +555,7 @@ Follow the Conventional Commits specification:
 
 ### Examples
 
-```
+```text
 feat(dns): add IPv6 record support
 
 Add support for AAAA records in the DNS server.
@@ -565,14 +565,14 @@ record formatting in responses.
 Closes #123
 ```
 
-```
+```text
 fix(config): handle missing config file gracefully
 
 Add proper error handling when config file doesn't exist.
 Fallback to default configuration instead of crashing.
 ```
 
-```
+```text
 docs(api): update DNSRecord documentation
 
 Improve docstrings for DNSRecord class with better

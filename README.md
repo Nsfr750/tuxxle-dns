@@ -59,19 +59,56 @@ A comprehensive DNS server management tool with graphical interface, built with 
 - Windows 10/11 (recommended)
 - Administrator privileges (for port 53)
 
-### Quick Start
+### Installation Methods
+
+#### Method 1: Automatic Installation (Recommended)
+
+**Windows:**
 
 ```bash
-# Clone the repository
-git clone https://github.com/Nsfr750/tuxxle-dns.git
-cd tuxxle-dns
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the application
-python main.py
+install_deps.bat
 ```
+
+**Linux/macOS:**
+
+```bash
+python install_deps.py
+```
+
+#### Method 2: Manual Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/Nsfr750/tuxxle-dns.git
+   cd tuxxle-dns
+   ```
+
+2. **Create virtual environment:**
+
+   ```bash
+   python -m venv venv
+   
+   # Windows
+   venv\Scripts\activate
+   
+   # Linux/macOS
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies:**
+
+   **For Python 3.12+:**
+
+   ```bash
+   pip install -r requirements-312.txt
+   ```
+
+   **For Python 3.8-3.11:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### Manual Installation
 

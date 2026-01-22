@@ -1,166 +1,172 @@
 # DNS Server Manager - Installation Guide
 
-This guide provides step-by-step instructions for installing DNS Server Manager on various platforms.
+Complete installation guide for DNS Server Manager on all platforms.
 
 ## System Requirements
 
 ### Minimum Requirements
 
-- **Operating System**: Windows 10+, macOS 10.14+, or Linux (Ubuntu 18.04+, CentOS 7+)
-- **Python**: 3.8 or higher
-- **Memory**: 512MB RAM
-- **Storage**: 100MB free disk space
-- **Network**: Administrative access to bind to ports 53 (DNS) and 8080 (Web UI)
+- **Python 3.8+** (3.12+ recommended)
+- **Memory**: 512MB RAM minimum
+- **Storage**: 100MB free space
+- **Network**: TCP port 53 access
 
-### Recommended Requirements
+### Platform Support
 
-- **Operating System**: Ubuntu 20.04+ LTS or Windows 11
-- **Python**: 3.10 or higher
-- **Memory**: 2GB RAM
-- **Storage**: 1GB free disk space
-- **Network**: Dedicated network interface
+- **Windows 10/11** (x64)
+- **macOS 10.15+** (Intel/Apple Silicon)
+- **Linux** (Ubuntu 18.04+, CentOS 7+, Debian 10+)
 
 ## Installation Methods
 
-### Method 1: Using Git Clone (Recommended)
+### Method 1: Automatic Installation (Recommended)
 
-#### Step 1: Clone the Repository
+#### Windows
+
+1. Download and run the installer:
+
+   ```cmd
+   install_deps.bat
+   ```
+
+2. Follow the on-screen instructions
+
+3. Launch the application:
+
+   ```cmd
+   run.bat
+   ```
+
+#### Linux/macOS
+
+1. Run the Python installer:
+
+   ```bash
+   python install_deps.py
+   ```
+
+2. Follow the prompts
+
+3. Launch the application:
+
+   ```bash
+   python launcher.py
+   ```
+
+### Method 2: Manual Installation
+
+#### Step 1: Clone Repository
 
 ```bash
 git clone https://github.com/Nsfr750/tuxxle-dns.git
 cd tuxxle-dns
 ```
 
-#### Step 2: Install Dependencies
+#### Step 2: Create Virtual Environment
 
 ```bash
-python setup/install_deps.py
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Linux/macOS
+source venv/bin/activate
 ```
 
-Or manually install dependencies:
+#### Step 3: Install Dependencies
+
+**For Python 3.12+:**
+
+```bash
+pip install -r requirements-312.txt
+```
+
+**For Python 3.8-3.11:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-#### Step 3: Verify Installation
+#### Step 4: Verify Installation
 
 ```bash
 python main.py --version
 ```
 
-### Method 2: Download Release Package
+## Configuration
 
-#### Step 1: Download Latest Release
+### Initial Setup
 
-Visit the [GitHub Releases](https://github.com/Nsfr750/tuxxle-dns/releases) page and download the latest release package for your platform.
+1. **Launch Application**: Start with administrator privileges
+2. **Configure Server**: Set DNS port and bind address
+3. **Add Records**: Create initial DNS records
+4. **Start Server**: Begin serving DNS queries
 
-#### Step 2: Extract the Package
+### Configuration Files
 
-```bash
-# For Linux/macOS
-tar -xzf tuxxle-dns-v1.0.0.tar.gz
-cd tuxxle-dns-v1.0.0
+The application creates a `config/` directory with:
 
-# For Windows
-# Use Explorer or 7-Zip to extract the ZIP file
-```
-
-#### Step 3: Install Dependencies
-
-```bash
-python setup/install_deps.py
-```
-
-### Method 3: Using pip (Future)
-
-```bash
-pip install tuxxle-dns
-```
+- `config.json` - Main configuration
+- `dns_records.db` - SQLite database
+- `dns_server.log` - Application logs
 
 ## Platform-Specific Instructions
 
-### Windows Installation
+### Windows
 
-#### Prerequisites
+#### Administrator Privileges
 
-1. Install Python 3.8+ from [python.org](https://www.python.org/downloads/)
-2. Ensure Python is added to PATH during installation
-3. Install Microsoft Visual C++ Build Tools if required
-
-#### Installation Steps
-
-1. Open Command Prompt or PowerShell as Administrator
-2. Navigate to the installation directory
-3. Run the installation commands:
+Required for port 53 (privileged port):
 
 ```cmd
-git clone https://github.com/Nsfr750/tuxxle-dns.git
-cd tuxxle-dns
-python setup/install_deps.py
+# Run as administrator
+run.bat
 ```
 
-#### Windows Service Installation (Optional)
+#### Firewall Configuration
+
+Add Windows Firewall exception:
+
+```cmd
+netsh advfirewall firewall add rule name="DNS Server" dir=in action=allow protocol=TCP localport=53
+```
+
+#### Service Installation (Optional)
+
+Install as Windows service:
 
 ```cmd
 python main.py --install-service
 ```
 
-### macOS Installation
+### macOS
 
-#### Prerequisites
+#### Port Configuration
 
-1. Install Homebrew:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Use alternative port if not running as root
+sudo python main.py --port 5353
 ```
 
-2. Install Python:
+#### Firewall Settings
+
 ```bash
-brew install python@3.10
+# Allow DNS through firewall
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/local/bin/python3 --allow
 ```
 
-#### Installation Steps
+### Linux
+
+#### Systemd Service (Optional)
+
+Create systemd service:
 
 ```bash
-git clone https://github.com/Nsfr750/tuxxle-dns.git
-cd tuxxle-dns
-python3 setup/install_deps.py
-```
-
-#### macOS Service Installation (Optional)
-
-```bash
-python3 main.py --install-launchd
-```
-
-### Linux Installation
-
-#### Ubuntu/Debian
-
-```bash
-# Update package list
-sudo apt update
-
-# Install Python and dependencies
-sudo apt install python3 python3-pip python3-venv git
-
-# Clone and install
-git clone https://github.com/Nsfr750/tuxxle-dns.git
-cd tuxxle-dns
-python3 setup/install_deps.py
-```
-
-#### CentOS/RHEL/Fedora
-
-```bash
-# Install Python and dependencies
-sudo yum install python3 python3-pip git
-
-# For Fedora
-sudo dnf install python3 python3-pip git
-
-# Clone and install
+sudo cp scripts/tuxxle-dns.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable tuxxle-dns
+sudo systemctl start tuxxle-dns
 git clone https://github.com/Nsfr750/tuxxle-dns.git
 cd tuxxle-dns
 python3 setup/install_deps.py
@@ -256,7 +262,9 @@ dig @localhost example.com
 ### Check Web Interface
 
 Open your web browser and navigate to:
+
 - Local: <http://localhost:8080>
+
 - Remote: <http://your-server-ip:8080>
 
 ### Check Logs
@@ -335,16 +343,19 @@ pip install -r requirements.txt
 #### DNS Resolution Not Working
 
 1. Check if the DNS server is running:
+
 ```bash
 ps aux | grep python
 ```
 
 2. Verify configuration:
+
 ```bash
 python main.py --check-config
 ```
 
 3. Test with specific DNS server:
+
 ```bash
 nslookup example.com 127.0.0.1
 ```
@@ -365,8 +376,8 @@ If you encounter issues during installation:
 1. Check the [GitHub Issues](https://github.com/Nsfr750/tuxxle-dns/issues)
 2. Review the [Security Policy](SECURITY.md)
 3. Contact support:
-   - **Email**: info@tuxxle.org
-   - **Security**: security@tuxxle.org
+   - **Email**: <mailto:info@tuxxle.org>
+   - **Security**: <mailto:info@tuxxle.org>
 
 ## Upgrading
 
@@ -381,12 +392,15 @@ python setup/install_deps.py
 ### Upgrade from Release
 
 1. Backup your configuration:
+
 ```bash
 cp config.json config.json.backup
 ```
 
 2. Download and extract the new version
+
 3. Restore your configuration:
+
 ```bash
 cp config.json.backup config.json
 ```

@@ -27,7 +27,7 @@ This document provides comprehensive guidelines for testing the DNS Server Manag
 
 ### Test Pyramid
 
-```
+```text
     E2E Tests (Few)
    ─────────────────
    Integration Tests (Some)
@@ -92,7 +92,7 @@ markers =
 
 ### Directory Layout
 
-```
+```text
 tests/
 ├── __init__.py                 # Test package initialization
 ├── conftest.py                 # Shared fixtures and configuration

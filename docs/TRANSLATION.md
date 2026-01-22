@@ -70,11 +70,12 @@ The translation system consists of three main components:
 
 Translation keys follow a hierarchical structure:
 
-```
+```text
 category.subcategory.item
 ```
 
 Examples:
+
 - `menu.title` - Main menu title
 - `button.save` - Save button text
 - `msg.error.save` - Save error message
@@ -83,31 +84,37 @@ Examples:
 ### Key Categories
 
 #### UI Elements
+
 - `menu.*` - Menu items and navigation
 - `button.*` - Button labels
 - `form.*` - Form field labels
 - `dialog.*` - Dialog titles and messages
 
 #### Server Status
+
 - `server.status.*` - Server status messages
 - `server.error.*` - Server error messages
 
 #### DNS Records
+
 - `dns.record.*` - DNS record types and operations
 - `dns.type.*` - DNS record type names
 
 #### Messages
+
 - `msg.success.*` - Success messages
 - `msg.error.*` - Error messages
 - `msg.warning.*` - Warning messages
 - `msg.info.*` - Information messages
 
 #### Settings
+
 - `settings.*` - Configuration options
 - `settings.general.*` - General settings
 - `settings.server.*` - Server settings
 
 #### Common
+
 - `common.*` - Commonly used terms
 - `time.*` - Time-related terms
 - `validation.*` - Validation messages
@@ -219,6 +226,7 @@ assert language_manager.get_text('button.save') == 'Guardar'
 ### UI Text Guidelines
 
 #### Buttons and Labels
+
 - Keep button text short and action-oriented
 - Use consistent terminology
 - Avoid abbreviations unless common
@@ -250,6 +258,7 @@ assert language_manager.get_text('button.save') == 'Guardar'
 ```
 
 #### Technical Terms
+
 - Keep technical terms in English when appropriate
 - Provide explanations for complex concepts
 - Use established translations for common terms
@@ -268,6 +277,7 @@ assert language_manager.get_text('button.save') == 'Guardar'
 ### String Formatting
 
 #### Placeholders
+
 - Use meaningful placeholder names
 - Maintain placeholder order when possible
 - Test formatted strings
@@ -283,6 +293,7 @@ assert language_manager.get_text('button.save') == 'Guardar'
 ```
 
 #### Pluralization
+
 - Handle plural forms appropriately
 - Consider language-specific plural rules
 - Use separate keys when necessary
