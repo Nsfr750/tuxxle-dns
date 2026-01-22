@@ -37,7 +37,7 @@ This document provides comprehensive guidelines for updating the DNS Server Mana
 
 We follow Semantic Versioning 2.0.0:
 
-```
+```text
 MAJOR.MINOR.PATCH
 ```
 
@@ -303,7 +303,7 @@ python update.py --rollback
 
 ### Update Package Structure
 
-```
+```text
 dns-server-manager-update-1.2.3.zip
 ├── manifest.json          # Update metadata
 ├── files/                 # Updated files
@@ -628,17 +628,20 @@ jobs:
 ### Release Steps
 
 1. **Create Release Branch**
+
    ```bash
    git checkout -b release/v1.2.3
    ```
 
 2. **Update Version**
+
    ```python
    # Update version.py
    __version__ = "1.2.3"
    ```
 
 3. **Update Changelog**
+
    ```markdown
    ## [1.2.3] - 2024-01-01
    
@@ -652,16 +655,19 @@ jobs:
    ```
 
 4. **Run Tests**
+
    ```bash
    pytest tests/ --cov=core --cov=ui
    ```
 
 5. **Build Update Packages**
+
    ```bash
    python build_update.py --version 1.2.3
    ```
 
 6. **Create Git Tag**
+
    ```bash
    git tag -a v1.2.3 -m "Release version 1.2.3"
    git push origin v1.2.3
@@ -822,6 +828,7 @@ class UpdateSecurity:
 ### Common Update Issues
 
 #### Update Download Fails
+
 ```python
 def troubleshoot_download_failure():
     """Troubleshoot update download failures"""
@@ -842,6 +849,7 @@ def troubleshoot_download_failure():
 ```
 
 #### Update Installation Fails
+
 ```python
 def troubleshoot_installation_failure():
     """Troubleshoot update installation failures"""
@@ -862,6 +870,7 @@ def troubleshoot_installation_failure():
 ```
 
 #### Update Verification Fails
+
 ```python
 def troubleshoot_verification_failure():
     """Troubleshoot update verification failures"""
