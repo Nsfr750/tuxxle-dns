@@ -89,6 +89,12 @@ def get_pyinstaller_command(args):
     if os.path.exists(icon_path):
         cmd.extend(["--icon", icon_path])
     
+    # Add version info for Windows
+    if platform.system() == "Windows":
+        version_info = create_version_file()
+        if version_info:
+            cmd.extend(["--version-file", version_info])
+    
     # Add data files and directories
     data_files = [
         (ASSETS_DIR, "assets"),
@@ -145,6 +151,24 @@ def create_version_file():
     if platform.system() != "Windows":
         return None
     
+    # Import version info from core.version
+    try:
+        version_info = {}
+        with open(VERSION_FILE, "r") as f:
+            exec(f.read(), version_info)
+        app_name = version_info.get("__app_name__", "Tuxxle-DNS")
+        app_version = version_info.get("__version__", "1.1.0")
+        app_author = version_info.get("__author__", "Nsfr750")
+        app_org = version_info.get("__organization__", "Tuxxle")
+        app_copyright = version_info.get("__copyright__", "© Copyright 2024-2026 Nsfr750 - All rights reserved.")
+    except Exception as e:
+        print(f"Warning: Could not read version info: {e}")
+        app_name = "Tuxxle-DNS"
+        app_version = "1.1.0"
+        app_author = "Nsfr750"
+        app_org = "Tuxxle"
+        app_copyright = "© Copyright 2024-2026 Nsfr750 - All rights reserved."
+    
     version_file_content = f"""
 # UTF-8
 #
@@ -154,8 +178,8 @@ VSVersionInfo(
   ffi=FixedFileInfo(
 # filevers and prodvers should be always a tuple with four items: (1, 2, 3, 4)
 # Set not needed items to zero 0.
-filevers=({__version__.replace('.', ', ')}, 0),
-prodvers=({__version__.replace('.', ', ')}, 0),
+filevers=({app_version.replace('.', ', ')}, 0),
+prodvers=({app_version.replace('.', ', ')}, 0),
 # Contains a bitmask that specifies the valid bits 'flags'r
 mask=0x3f,
 # Contains a bitmask that specifies the Boolean attributes of the file.
@@ -177,14 +201,18 @@ StringFileInfo(
   [
   StringTable(
     u'040904B0',
-    [StringStruct(u'CompanyName', u'Tuxxle'),
-    StringStruct(u'FileDescription', u'Tuxxle-DNS Server Manager'),
-    StringStruct(u'FileVersion', u'{__version__}'),
-    StringStruct(u'InternalName', u'Tuxxle-DNS'),
-    StringStruct(u'LegalCopyright', u'© Copyright 2024-2026 Nsfr750 - All rights reserved.'),
-    StringStruct(u'OriginalFilename', u'Tuxxle-DNS-{__version__}.exe'),
-    StringStruct(u'ProductName', u'Tuxxle-DNS'),
-    StringStruct(u'ProductVersion', u'{__version__}')])
+    [StringStruct(u'CompanyName', u'{app_org}'),
+    StringStruct(u'FileDescription', u'{app_name} - DNS Server Manager with PySide6 GUI'),
+    StringStruct(u'FileVersion', u'{app_version}'),
+    StringStruct(u'InternalName', u'{app_name.replace("-", "").replace(" ", "")}'),
+    StringStruct(u'LegalCopyright', u'Copyright (c) 2024-2026 {app_author} - All rights reserved.'),
+    StringStruct(u'OriginalFilename', u'{app_name}-{app_version}.exe'),
+    StringStruct(u'ProductName', u'{app_name}'),
+    StringStruct(u'ProductVersion', u'{app_version}'),
+    StringStruct(u'Comments', u'DNS Server Manager with internationalization support and comprehensive testing framework'),
+    StringStruct(u'LegalTrademarks', u'Tuxxle is a registered trademark of {app_org}'),
+    StringStruct(u'PrivateBuild', u'PyInstaller Build'),
+    StringStruct(u'SpecialBuild', u'Production Release')])
   ]), 
 VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
   ]
