@@ -15,6 +15,7 @@ from .security import SecurityManager
 from .dnssec import DNSSECManager
 from .wildcard import WildcardManager
 from .forwarding import ConditionalForwarding
+from .green_dns import GreenDNSManager
 
 class DNSServer:
     """DNS Server implementation"""
@@ -34,6 +35,7 @@ class DNSServer:
         self.dnssec_manager = DNSSECManager()
         self.wildcard_manager = WildcardManager()
         self.conditional_forwarding = ConditionalForwarding()
+        self.green_dns_manager = GreenDNSManager()
         
         # DNS records storage (in-memory cache)
         self.records: Dict[str, List[DNSRecord]] = {}
@@ -522,6 +524,28 @@ class DNSServer:
         name = name.lower()
         return self.records.get(name, [])
     
+    def start_green_monitoring(self, interval: int = 60):
+        """Start green DNS monitoring"""
+        self.green_dns_manager.start_monitoring(interval)
+    
+    def stop_green_monitoring(self):
+        """Stop green DNS monitoring"""
+        self.green_dns_manager.stop_energy_monitoring()
+    
+    def get_environmental_report(self, days: int = 30):
+        """Get environmental impact report"""
+        return self.green_dns_manager.get_environmental_impact_report(days)
+    
+    def set_energy_mode(self, mode: str):
+        """Set energy optimization mode"""
+        from .green_dns import EnergyMode
+        energy_mode = EnergyMode(mode)
+        self.green_dns_manager.set_energy_mode(energy_mode)
+    
+    def get_green_recommendations(self):
+        """Get green hosting recommendations"""
+        return self.green_dns_manager.get_recommendations()
+    
     def get_stats(self) -> Dict:
         """Get server statistics"""
         stats = self.stats.copy()
@@ -538,5 +562,8 @@ class DNSServer:
         
         # Add security statistics
         stats['security'] = self.security_manager.get_security_status()
+        
+        # Add green DNS statistics
+        stats['green_dns'] = self.green_dns_manager.get_energy_statistics()
         
         return stats

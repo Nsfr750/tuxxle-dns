@@ -36,7 +36,7 @@ class HelpDialog(QDialog):
         help_text = QTextEdit()
         help_text.setReadOnly(True)
         help_content = """
-DNS SERVER MANAGER - USER GUIDE
+DNS SERVER MANAGER - USER GUIDE v1.2.0
 
 GETTING STARTED:
 1. Start DNS server using "Start Server" button
@@ -54,26 +54,53 @@ MAIN FEATURES:
 • DNS RECORDS MANAGEMENT
   - Add, edit, delete DNS records
   - Support for A, AAAA, CNAME, MX, TXT, NS records
+  - Wildcard records support (*.example.com)
   - Bulk import/export functionality
   - Search and filter capabilities
+
+• ADVANCED DNS FEATURES
+  - Wildcard Records: Support for DNS wildcards (* and ? patterns)
+  - Conditional Forwarding: Smart query forwarding based on conditions
+  - DNSSEC Support: Digital signatures for DNS records
+  - Query Rate Limiting: Protection against DoS attacks
+  - IP Filtering: Whitelist/blacklist access control
+
+• SECURITY MANAGEMENT
+  - Comprehensive security dashboard
+  - Real-time threat monitoring
+  - Audit logging with database storage
+  - Secure configuration encryption
+  - Rate limiting and IP filtering controls
+
+• GREEN DNS (NEW)
+  - Energy usage optimization and monitoring
+  - Carbon footprint tracking and reporting
+  - Environmental impact analysis
+  - Green hosting recommendations
+  - Energy efficiency modes (Performance, Balanced, Eco, Ultra Eco)
 
 • STATISTICS
   - Real-time query statistics
   - Request/response monitoring
   - Performance metrics
   - Connection tracking
+  - Energy consumption metrics
+  - Security event statistics
 
 • CONFIGURATION
   - Server settings (port, bind address, timeout)
   - Logging configuration
   - UI preferences
   - Database settings
+  - Security policy configuration
+  - Green DNS optimization settings
 
 • LOGS
   - Real-time log viewing
   - Log level filtering
   - Export logs functionality
   - Search capabilities
+  - Security audit logs
 
 • DATABASE
   - Database management interface
@@ -90,7 +117,11 @@ MENU OPTIONS:
 
 • TOOLS MENU
   - Database Tools: Database management utilities
+  - IP Converter: IPv4 to IPv6 conversion tools
+  - Security: Advanced security management
+  - Green DNS: Energy optimization and sustainability
   - Clear Logs: Clear application logs
+  - Server Diagnostics: System diagnostics
   - Export Configuration: Export current settings
 
 • HELP MENU
@@ -98,6 +129,28 @@ MENU OPTIONS:
   - About: Application information
   - Version: Show version details
   - Sponsor: Support information
+
+NEW FEATURES IN v1.2.0:
+
+🌱 GREEN DNS
+- Real-time energy consumption monitoring
+- Carbon footprint calculation and tracking
+- Environmental impact reporting
+- Green hosting recommendations
+- Energy optimization modes
+
+🔒 ADVANCED SECURITY
+- DNSSEC support with key management
+- Query rate limiting per second/minute
+- IP whitelisting/blacklisting with CIDR support
+- Comprehensive audit logging
+- Secure encrypted configuration storage
+
+🚀 DNS ENHANCEMENTS
+- Wildcard record support (*.example.com)
+- Conditional forwarding with multiple conditions
+- Time-based, client IP, and query type forwarding
+- Enhanced caching and performance optimization
 
 TROUBLESHOOTING:
 
@@ -110,11 +163,25 @@ TROUBLESHOOTING:
   - Verify record configuration
   - Check DNS server status
   - Review logs for errors
+  - Check wildcard patterns if used
 
 • Performance issues:
   - Monitor statistics tab
   - Check database size
   - Review system resources
+  - Consider energy optimization mode
+
+• Security concerns:
+  - Review security dashboard
+  - Check audit logs
+  - Verify rate limiting settings
+  - Update DNSSEC keys if needed
+
+• Energy optimization:
+  - Use Green DNS dialog for monitoring
+  - Select appropriate energy mode
+  - Review green recommendations
+  - Monitor carbon footprint trends
 
 For additional support, visit: https://www.tuxxle.org
 Security reports: security@tuxxle.org

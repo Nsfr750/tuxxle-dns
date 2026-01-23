@@ -1,12 +1,13 @@
-# DNS Server Manager - Security Policy
+# DNS Server Manager - Security Policy v1.2.0
 
-This document outlines the security policies, practices, and guidelines for DNS Server Manager.
+This document outlines the security policies, practices, and guidelines for DNS Server Manager v1.2.0.
 
 ## Security Overview
 
 DNS Server Manager is designed with security as a primary consideration. This document covers:
 
 - Security architecture and principles
+- Advanced security features (NEW in v1.2.0)
 - Vulnerability reporting process
 - Security best practices
 - Known security considerations
@@ -36,6 +37,48 @@ DNS Server Manager is designed with security as a primary consideration. This do
 - Compliance with privacy regulations
 
 ## Security Features
+
+### Advanced Security Features (NEW in v1.2.0)
+
+#### DNSSEC Support
+
+- **Complete DNSSEC Implementation**: Full DNSSEC support with RSA, ECDSA, and ED25519 algorithms
+- **Key Management**: Automated key generation, rotation, and management
+- **Zone Signing**: Automatic zone signing with RRSIG and NSEC records
+- **Signature Verification**: DNSSEC signature validation for responses
+- **Key Storage**: Secure storage of DNSSEC keys with encryption
+
+#### Query Rate Limiting
+
+- **DoS Protection**: Advanced protection against DNS amplification attacks
+- **Configurable Limits**: Per-second (RPS) and per-minute (RPM) query limits
+- **Memory Efficient**: Non-blocking rate limiting with automatic cleanup
+- **Real-time Statistics**: Live monitoring of rate limiting effectiveness
+- **Whitelist Support**: Exempt trusted clients from rate limiting
+
+#### IP Access Control
+
+- **Whitelisting/Blacklisting**: Comprehensive IP-based access control
+- **CIDR Support**: Network range filtering with CIDR notation
+- **Dynamic Management**: Runtime IP list modifications
+- **Priority System**: Blacklist takes precedence over whitelist
+- **Persistent Storage**: Secure storage of IP filtering rules
+
+#### Comprehensive Audit Logging
+
+- **Security Event Tracking**: Complete audit trail of all security events
+- **Database Storage**: SQLite database for persistent audit logs
+- **Event Classification**: INFO, WARNING, ERROR, CRITICAL severity levels
+- **Advanced Filtering**: Search and filter capabilities for audit analysis
+- **Export Capabilities**: CSV export for external security analysis
+
+#### Secure Configuration
+
+- **Encrypted Storage**: AES-256 encryption for sensitive configuration data
+- **Key Derivation**: PBKDF2 with salt for master password protection
+- **Integrity Verification**: SHA-256 hashing for configuration integrity
+- **Backup/Restore**: Encrypted backup and restore functionality
+- **Secure Updates**: Secure configuration update mechanisms
 
 ### Input Validation
 

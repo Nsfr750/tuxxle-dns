@@ -1,6 +1,6 @@
-# DNS Server Manager - User Guide
+# DNS Server Manager - User Guide v1.2.0
 
-This guide provides comprehensive instructions for using DNS Server Manager to manage your DNS server and records.
+This guide provides comprehensive instructions for using DNS Server Manager v1.2.0 to manage your DNS server, records, security, and sustainability features.
 
 ## Table of Contents
 
@@ -8,14 +8,16 @@ This guide provides comprehensive instructions for using DNS Server Manager to m
 2. [Web Interface Overview](#web-interface-overview)
 3. [DNS Server Management](#dns-server-management)
 4. [DNS Records Management](#dns-records-management)
-5. [Configuration](#configuration)
-6. [Monitoring and Logging](#monitoring-and-logging)
-7. [Advanced Features](#advanced-features)
-8. [Troubleshooting](#troubleshooting)
+5. [Advanced DNS Features](#advanced-dns-features) (NEW)
+6. [Security Management](#security-management) (NEW)
+7. [Green DNS & Sustainability](#green-dns-sustainability) (NEW)
+8. [Configuration](#configuration)
+9. [Monitoring and Logging](#monitoring-and-logging)
+10. [Troubleshooting](#troubleshooting)
 
 ## Getting Started
 
-### Accessing the Web Interface
+### Accessing the Application
 
 1. Start the DNS Server Manager:
 
@@ -23,31 +25,48 @@ This guide provides comprehensive instructions for using DNS Server Manager to m
 python main.py
 ```
 
-1. Open your web browser and navigate to:
-   - Local: <http://localhost:8080>
-   - Remote: <http://your-server-ip:8080>
+2. The application will open with the main window featuring:
+   - Server status indicator
+   - Quick statistics
+   - Recent DNS queries
+   - Configuration summary
 
 ### Initial Setup
 
-When you first access the web interface, you'll see the main dashboard with:
+When you first start the application, you'll see the main dashboard with:
 
-- Server status indicator
-- Quick statistics
-- Recent DNS queries
-- Configuration summary
+- **Server Control**: Start/stop DNS server
+- **Records Management**: Add, edit, delete DNS records
+- **Security Dashboard**: Advanced security controls (NEW)
+- **Green DNS Monitor**: Energy and sustainability tracking (NEW)
+- **Configuration**: System and DNS settings
+- **Logs & Stats**: Real-time monitoring
 
 ## Web Interface Overview
 
 ### Navigation Menu
 
-The web interface consists of several main sections:
+The application interface consists of several main sections accessible via the menu bar:
+
+- **File**: Application management and exit
+- **Edit**: Preferences and settings
+- **Tools**: Advanced tools and utilities
+  - Database Tools: Database management
+  - IP Converter: IPv4/IPv6 conversion (NEW)
+  - Security: Advanced security management (NEW)
+  - Green DNS: Energy optimization (NEW)
+  - Clear Logs: Log management
+  - Server Diagnostics: System diagnostics
+  - Export Configuration: Settings export
+- **Help**: Documentation and support
+
+### Main Tabs
 
 - **Dashboard**: Overview and quick access to common tasks
-- **Server**: DNS server control and status
-- **Records**: DNS record management
-- **Config**: Configuration settings
+- **DNS Records**: DNS record management
+- **Configuration**: Server and application settings
+- **Statistics**: Real-time statistics and monitoring
 - **Logs**: Query logs and system logs
-- **Stats**: Statistics and monitoring
 - **Help**: Documentation and support
 
 ### Dashboard

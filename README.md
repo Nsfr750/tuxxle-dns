@@ -1,6 +1,6 @@
 # DNS Server Manager
 
-![Version](https://img.shields.io/badge/Version-1.1.0-blue)
+![Version](https://img.shields.io/badge/Version-1.2.0-blue)
 ![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue)
 ![GUI](https://img.shields.io/badge/GUI-PySide6.10-blue)
 ![License](https://img.shields.io/badge/License-GPLv3-blue)
@@ -13,6 +13,33 @@
 A comprehensive DNS server management tool with graphical interface, built with PySide6 and Python. Features complete internationalization, comprehensive testing framework, and professional documentation.
 
 ## Features
+
+### 🌱 Green DNS & Sustainability (NEW in v1.2.0)
+
+- **Energy Usage Optimization**: Real-time monitoring of power consumption
+- **Carbon Footprint Tracking**: Calculate and track CO2 emissions
+- **Environmental Impact Reporting**: Comprehensive sustainability reports
+- **Green Hosting Recommendations**: AI-powered optimization suggestions
+- **Energy Efficiency Modes**: Performance, Balanced, Eco, Ultra Eco modes
+- **Environmental Equivalents**: Convert impact to trees, car km, smartphone charges
+
+### 🔒 Advanced Security (NEW in v1.2.0)
+
+- **DNSSEC Support**: Complete DNSSEC implementation with key management
+- **Query Rate Limiting**: Protection against DoS attacks (RPS/RPM limits)
+- **IP Whitelisting/Blacklisting**: CIDR-based access control
+- **Comprehensive Audit Logging**: Security event tracking with database storage
+- **Secure Configuration Storage**: Encrypted configuration with AES-256
+- **Real-time Threat Monitoring**: Security dashboard with alerts
+
+### 🚀 Advanced DNS Features (NEW in v1.2.0)
+
+- **Wildcard Records**: Support for DNS wildcards (* and ? patterns)
+- **Conditional Forwarding**: Smart query forwarding based on multiple conditions
+- **Time-based Forwarding**: Forward queries based on time schedules
+- **Client IP Filtering**: Forward based on client IP ranges
+- **Query Type Filtering**: Selective forwarding by DNS record type
+- **Enhanced Caching**: Improved performance with intelligent caching
 
 ### DNS Server Capabilities
 

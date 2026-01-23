@@ -1,79 +1,91 @@
-# DNS Server Manager - Project Structure
+# DNS Server Manager - Project Structure v1.2.0
 
-This document describes the complete structure of the DNS Server Manager project.
+This document describes the complete structure of the DNS Server Manager project v1.2.0.
 
 ## Directory Structure
 
 ```text
 tuxxle-dns/
-├── README.md                # Project overview and getting started guide
-├── CHANGELOG.md             # Version history and changes
-├── requirements.txt         # Python dependencies
-├── main.py                  # Application entry point
+├── README.md                       # Project overview and getting started guide
+├── CHANGELOG.md                    # Version history and changes
+├── requirements.txt                # Python dependencies
+├── requirements-312.txt            # Python 3.12 specific dependencies
+├── main.py                         # Application entry point
 │
-├── config/                  # Configuration files
-│   ├── config.json          # Default configuration file
-│   ├── dsn_records.db       # DNS records database
-│   └── dns_server.log       # DNS server log file (generated)
-|
-├── core/                    # Core DNS server functionality
+├── config/                         # Configuration files
+│   ├── config.json                 # Default configuration file
+│   ├── dns_records.db              # DNS records database
+│   ├── dns_server.log              # DNS server log file (generated)
+│   └── green_dns.db                # Green DNS metrics database (generated)
+│
+├── core/                           # Core DNS server functionality
 │   ├── __init__.py
-│   ├── config.py            # Configuration management
-│   ├── version.py           # Version information
-│   ├── database.py          # Database operations and models
-│   ├── dns_records.py       # DNS record types and operations
-│   └── dns_server.py        # Main DNS server implementation
+│   ├── config.py                   # Configuration management
+│   ├── version.py                  # Version information
+│   ├── database.py                 # Database operations and models
+│   ├── dns_records.py              # DNS record types and operations
+│   ├── dns_server.py               # Main DNS server implementation
+│   ├── security.py                 # Security management (NEW v1.2.0)
+│   ├── dnssec.py                   # DNSSEC implementation (NEW v1.2.0)
+│   ├── wildcard.py                 # Wildcard records support (NEW v1.2.0)
+│   ├── forwarding.py               # Conditional forwarding (NEW v1.2.0)
+│   └── green_dns.py                # Energy monitoring & sustainability (NEW v1.2.0)
 │
-├── ui/                      # User interface components
+├── ui/                             # User interface components
 │   ├── __init__.py
-│   ├── main_window.py       # Main application window
-│   ├── records_widget.py    # DNS records management widget
-│   ├── stats_widget.py      # Statistics display widget
-│   ├── config_widget.py     # Configuration management widget
-│   ├── logs_widget.py       # Log monitoring widget
-│   ├── preferences_dialog.py # Preferences configuration dialog
-|   ├── about.py             # About dialog
-|   ├── help.py              # Help dialog
-|   ├── sponsor.py           # Sponsor dialog
-|   ├── menu.py              # Menu bar
-|   ├── themes.py            # Theme management
-│   └── database_widget.py   # Database management widget
+│   ├── main_window.py              # Main application window
+│   ├── records_widget.py           # DNS records management widget
+│   ├── stats_widget.py             # Statistics display widget
+│   ├── config_widget.py            # Configuration management widget
+│   ├── logs_widget.py              # Log monitoring widget
+│   ├── preferences_dialog.py       # Preferences configuration dialog
+│   ├── about.py                    # About dialog
+│   ├── help.py                     # Help dialog
+│   ├── sponsor.py                  # Sponsor dialog
+│   ├── menu.py                     # Menu bar
+│   ├── themes.py                   # Theme management
+│   ├── database_widget.py          # Database management widget
+│   ├── diagnostics_dialog.py       # Server diagnostics dialog
+│   ├── database_tools_dialog.py    # Database tools dialog
+│   ├── ip_converter_dialog.py      # IPv4/IPv6 converter dialog (NEW v1.2.0)
+│   ├── security_dialog.py          # Security management dialog (NEW v1.2.0)
+│   └── green_dns_dialog.py         # Green DNS management dialog (NEW v1.2.0)
 │
-├── lang/                    # Internationalization (future)
+├── lang/                           # Internationalization
 │   ├── __init__.py
-│   ├── language_manager.py  # Language management system
-│   └── translations.py      # Translation strings
+│   ├── language_manager.py         # Language management system
+│   └── translations.py             # Translation strings
 │
-├── tests/                   # Test suite
+├── tests/                          # Test suite
 │   ├── __init__.py
-│   ├── test_dns_server.py   # DNS server tests
-│   ├── test_records.py      # DNS records tests
-│   ├── test_config.py       # Configuration tests
-│   └── test_ui.py           # UI component tests
+│   ├── test_dns_server.py          # DNS server tests
+│   ├── test_records.py             # DNS records tests
+│   ├── test_config.py              # Configuration tests
+│   └── test_ui.py                  # UI component tests
 │
-├── docs/                    # Documentation
+├── docs/                           # Documentation
 │   ├── __init__.py
-│   ├── API.md               # API documentation
-│   ├── BUILDING.md          # Building instructions
-│   ├── INSTALLATION.md      # Installation guide
-│   ├── ROADMAP.md           # Development roadmap
-│   ├── SECURITY.md          # Security information
-│   ├── STRUCTURE.md         # This file - project structure
-│   ├── STYLE.md             # Code style guidelines
-│   ├── TESTING.md           # Testing guidelines
-│   ├── TRANSLATIONS.md      # Translations guide
-|   ├── UPDATING.md          # Updating guide
-│   ├── USER_GUIDE.md        # User guide
-│   └── VERSIONING.md        # Versioning guide
+│   ├── API.md                      # API documentation
+│   ├── BUILDING.md                 # Building instructions
+│   ├── INSTALLATION.md             # Installation guide
+│   ├── ROADMAP.md                  # Development roadmap
+│   ├── SECURITY.md                 # Security information
+│   ├── STRUCTURE.md                # This file - project structure
+│   ├── STYLE.md                    # Code style guidelines
+│   ├── TESTING.md                  # Testing guidelines
+│   ├── TRANSLATIONS.md             # Translations guide
+│   ├── UPDATING.md                 # Updating guide
+│   ├── USER_GUIDE.md               # User guide
+│   └── VERSIONING.md               # Versioning guide
 │
-├── setup/                   # Setup and maintenance scripts
-│   ├── clean_pycache.py     # Clean Python cache files
-|   └── setup.py             # Package setup and installation
+├── setup/                          # Setup and maintenance scripts
+│   ├── clean_pycache.py            # Clean Python cache files
+│   └── setup.py                    # Package setup and installation
 │
-└── assets/                  # Static assets (future)
-    ├── icons/               # Application icons
-    ├── images/              # Images and graphics
-    └── themes/              # UI themes
+└── assets/                         # Static assets (future)
+    ├── icons/                      # Application icons
+    ├── images/                     # Images and graphics
+    └── themes/                     # UI themes
 ```
 
 ## Core Components

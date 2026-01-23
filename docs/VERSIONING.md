@@ -1,6 +1,6 @@
-# Versioning Guide
+# Versioning Guide v1.2.0
 
-This document outlines the versioning strategy and practices for the DNS Server Manager project. We follow Semantic Versioning 2.0.0 to ensure clear, predictable version management.
+This document outlines the versioning strategy and practices for the DNS Server Manager project v1.2.0. We follow Semantic Versioning 2.0.0 to ensure clear, predictable version management.
 
 ## Table of Contents
 
@@ -48,6 +48,85 @@ MAJOR.MINOR.PATCH
 #### MAJOR Version
 - **When to increment**: Incompatible API changes
 - **Impact**: Breaking changes that require user intervention
+- **Examples**: Database schema changes, API endpoint removals
+- **Current**: 1.x.x
+
+#### MINOR Version
+- **When to increment**: New features in backward-compatible manner
+- **Impact**: New functionality without breaking existing APIs
+- **Examples**: New security features, UI enhancements, new DNS record types
+- **Current**: 1.2.x
+
+#### PATCH Version
+- **When to increment**: Bug fixes and minor improvements
+- **Impact**: No new features, no breaking changes
+- **Examples**: Bug fixes, performance improvements, documentation updates
+- **Current**: 1.2.x
+
+## Release Types
+
+### Major Releases (1.x.x → 2.x.x)
+
+**Criteria:**
+- Breaking changes to core functionality
+- Database schema modifications
+- API endpoint changes
+- Major architectural changes
+
+**Examples:**
+- Complete rewrite of DNS server core
+- Database migration requiring user action
+- Removal of deprecated features
+
+### Minor Releases (1.1.x → 1.2.x)
+
+**Criteria:**
+- New features without breaking changes
+- Enhanced functionality
+- New security capabilities
+- UI improvements
+
+**v1.2.0 Examples:**
+- Green DNS energy monitoring system
+- Advanced security features (DNSSEC, rate limiting, IP filtering)
+- Wildcard records support
+- Conditional forwarding
+- Enhanced audit logging
+
+### Patch Releases (1.2.0 → 1.2.1)
+
+**Criteria:**
+- Bug fixes
+- Security patches
+- Performance improvements
+- Documentation updates
+- Minor UI fixes
+
+## Version Management
+
+### Version Information Storage
+
+Version information is stored in:
+- `core/version.py`: Primary version source
+- `README.md`: Documentation version
+- `CHANGELOG.md`: Release history
+- Package metadata: Distribution version
+
+### Version Update Process
+
+1. Update `core/version.py`
+2. Update documentation files
+3. Update CHANGELOG.md
+4. Update package metadata
+5. Create release tag
+6. Build and distribute
+
+### Version Validation
+
+- Automated version consistency checks
+- Documentation version verification
+- Build system version validation
+- Package version verification
 - **Examples**: Database schema changes, configuration format changes, API endpoint changes
 
 #### MINOR Version

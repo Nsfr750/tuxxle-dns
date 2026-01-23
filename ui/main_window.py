@@ -435,6 +435,19 @@ class MainWindow(QMainWindow):
             self.logger.error(f"Error showing security dialog: {e}")
             QMessageBox.critical(self, "Error", f"Failed to open security dialog:\n{str(e)}")
     
+    def _show_green_dns(self):
+        """Show Green DNS management dialog"""
+        try:
+            from .green_dns_dialog import GreenDNSDialog
+            
+            # Create and show Green DNS dialog
+            dialog = GreenDNSDialog(self)
+            dialog.exec_()
+            
+        except Exception as e:
+            self.logger.error(f"Error showing Green DNS dialog: {e}")
+            QMessageBox.critical(self, "Error", f"Failed to open Green DNS dialog:\n{str(e)}")
+    
     def _export_configuration(self):
         """Export current configuration"""
         from PySide6.QtWidgets import QFileDialog

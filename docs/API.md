@@ -1,20 +1,27 @@
-# DNS Server Manager - API Documentation
+# DNS Server Manager - API Documentation v1.2.0
 
-This document describes the API interface for DNS Server Manager.
+This document describes the API interface for DNS Server Manager v1.2.0.
 
 ## Overview
 
-DNS Server Manager provides a programmatic interface for managing DNS server configuration, records, and operations. The API is designed to be RESTful and follows standard HTTP conventions.
+DNS Server Manager provides a comprehensive programmatic interface for managing DNS server configuration, records, security, and sustainability features. The API is designed to be RESTful and follows standard HTTP conventions.
 
 ## Base URL
 
 ```
-http://localhost:8080/api/v1
+http://localhost:8080/api/v1.2
 ```
 
 ## Authentication
 
 Currently, the management interface runs without authentication and requires local access. Remote access should be secured via VPN or SSH tunneling.
+
+## New in v1.2.0
+
+- **Green DNS API**: Energy monitoring and carbon footprint tracking
+- **Security API**: Advanced security management endpoints
+- **Advanced DNS API**: Wildcard records and conditional forwarding
+- **Enhanced Statistics**: Comprehensive metrics collection
 
 ## Endpoints
 
@@ -22,7 +29,7 @@ Currently, the management interface runs without authentication and requires loc
 
 #### Get Server Status
 ```http
-GET /api/v1/server/status
+GET /api/v1.2/server/status
 ```
 
 **Response:**
@@ -30,8 +37,18 @@ GET /api/v1/server/status
 {
   "status": "running",
   "uptime": 3600,
-  "version": "1.0.0",
-  "config_file": "/path/to/config.json"
+  "version": "1.2.0",
+  "config_file": "/path/to/config.json",
+  "green_dns": {
+    "energy_mode": "balanced",
+    "monitoring_active": true,
+    "current_power_watts": 85.5
+  },
+  "security": {
+    "rate_limiting_enabled": true,
+    "ip_filtering_enabled": true,
+    "dnssec_enabled": false
+  }
 }
 ```
 
@@ -345,11 +362,181 @@ class DNSServerManager {
 }
 ```
 
+### Green DNS Management (NEW in v1.2.0)
+
+#### Get Energy Metrics
+```http
+GET /api/v1.2/green/energy/metrics
+```
+
+**Response:**
+```json
+{
+  "timestamp": 1642972800,
+  "cpu_usage": 25.5,
+  "memory_usage": 45.2,
+  "power_consumption": 85.5,
+  "carbon_footprint": 0.000023,
+  "energy_per_query": 0.15,
+  "queries_processed": 1500
+}
+```
+
+#### Get Environmental Report
+```http
+GET /api/v1.2/green/report?days=30
+```
+
+**Response:**
+```json
+{
+  "period_days": 30,
+  "energy_consumption": {
+    "total_energy_kwh": 125.5,
+    "daily_energy_kwh": 4.18
+  },
+  "carbon_footprint": {
+    "total_carbon_kg": 29.2,
+    "daily_carbon_kg": 0.97
+  },
+  "environmental_equivalents": {
+    "trees_needed": 1.33,
+    "car_km_offset": 243.3
+  }
+}
+```
+
+#### Set Energy Mode
+```http
+POST /api/v1.2/green/energy/mode
+```
+
+**Request:**
+```json
+{
+  "mode": "eco"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Energy mode set to eco"
+}
+```
+
+### Security Management (NEW in v1.2.0)
+
+#### Get Security Status
+```http
+GET /api/v1.2/security/status
+```
+
+**Response:**
+```json
+{
+  "rate_limiting": {
+    "enabled": true,
+    "max_rps": 100,
+    "max_rpm": 1000,
+    "blocked_queries": 25
+  },
+  "ip_filtering": {
+    "enabled": true,
+    "whitelist_count": 10,
+    "blacklist_count": 5
+  },
+  "dnssec": {
+    "enabled": false,
+    "signed_zones": 0
+  },
+  "audit_logging": {
+    "enabled": true,
+    "events_today": 150
+  }
+}
+```
+
+#### Get Audit Events
+```http
+GET /api/v1.2/security/audit?limit=100&severity=WARNING
+```
+
+**Response:**
+```json
+{
+  "events": [
+    {
+      "timestamp": 1642972800,
+      "type": "ip_blocked",
+      "source_ip": "192.168.1.100",
+      "query_name": "example.com",
+      "action": "blocked",
+      "severity": "WARNING"
+    }
+  ],
+  "total": 150,
+  "limit": 100
+}
+```
+
+#### Add IP to Blacklist
+```http
+POST /api/v1.2/security/ip/blacklist
+```
+
+**Request:**
+```json
+{
+  "ip": "192.168.1.100",
+  "reason": "Malicious activity detected"
+}
+```
+
+### Advanced DNS Features (NEW in v1.2.0)
+
+#### Add Wildcard Record
+```http
+POST /api/v1.2/dns/records/wildcard
+```
+
+**Request:**
+```json
+{
+  "name": "*.example.com",
+  "type": "A",
+  "value": "192.168.1.100",
+  "ttl": 300
+}
+```
+
+#### Add Forwarding Rule
+```http
+POST /api/v1.2/dns/forwarding/rules
+```
+
+**Request:**
+```json
+{
+  "name": "external.com",
+  "type": "conditional",
+  "servers": ["8.8.8.8", "1.1.1.1"],
+  "conditions": {
+    "record_exists": {
+      "negate": true,
+      "record_types": ["A", "AAAA"]
+    }
+  },
+  "priority": 100
+}
+```
+
 ## Version History
 
 - **v1.0.0**: Initial API release
-- **v1.1.0**: Added WebSocket support (planned)
-- **v1.2.0**: Added authentication (planned)
+- **v1.1.0**: Added WebSocket support and basic authentication
+- **v1.2.0**: Added Green DNS, Security, and Advanced DNS APIs
 
 ## Support
 

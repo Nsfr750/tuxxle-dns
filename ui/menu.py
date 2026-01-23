@@ -112,6 +112,10 @@ class MenuManager:
         security_action = tools_menu.addAction("Security")
         security_action.triggered.connect(self.main_window._show_security)
         
+        # Green DNS
+        green_dns_action = tools_menu.addAction("Green DNS")
+        green_dns_action.triggered.connect(self.main_window._show_green_dns)
+        
         # Clear logs
         clear_logs_action = tools_menu.addAction("Clear Logs")
         clear_logs_action.triggered.connect(self.main_window._clear_logs)
