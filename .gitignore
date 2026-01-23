@@ -183,3 +183,4 @@ cython_debug/
 /setup
 dns_records.db
 nuitka-crash-report.xml
+config/dns_backup_tuxxle-dns.db

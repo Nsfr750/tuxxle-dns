@@ -311,13 +311,28 @@ class DNSServer:
             if record:
                 answer_count += 1
                 answer_section += qname  # Name
+                
+                # Prepare record data based on type
+                if record.record_type == DNSRecordType.A:
+                    # Convert IPv4 address string to 4-byte binary format
+                    ip_bytes = socket.inet_aton(record.value)
+                    data_length = 4
+                elif record.record_type == DNSRecordType.AAAA:
+                    # Convert IPv6 address string to 16-byte binary format
+                    ip_bytes = socket.inet_pton(socket.AF_INET6, record.value)
+                    data_length = 16
+                else:
+                    # For other record types, use ASCII encoding
+                    ip_bytes = record.value.encode('ascii')
+                    data_length = len(ip_bytes)
+                
                 answer_section += struct.pack('!HHIH', 
                     question['type'],  # Type
                     question['class'],  # Class
                     record.ttl,        # TTL
-                    len(record.value)  # Data length
+                    data_length        # Data length
                 )
-                answer_section += record.value.encode('ascii')  # Data
+                answer_section += ip_bytes  # Data
         
         # Build complete response
         header = struct.pack('!HHHHHH',
