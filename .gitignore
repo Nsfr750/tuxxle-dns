@@ -180,7 +180,12 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 /.windsurf
-/setup
 dns_records.db
 nuitka-crash-report.xml
 config/dns_backup_tuxxle-dns.db
+setup/PyPI
+setup/firma.bat 
+setup/TXT 
+setup/clean_pycache.py
+
+

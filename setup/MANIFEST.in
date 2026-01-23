@@ -1,0 +1,49 @@
+# Manifest file for DNS Server Manager
+# Specifies additional files to include in the distribution
+
+# Include documentation files
+include README.md
+include LICENSE
+include CHANGELOG.md
+include requirements.txt
+include setup.py
+include py-build.py
+include build.spec
+include version_info.txt
+include build.bat
+
+# Include configuration files
+include *.json
+include *.ini
+include *.cfg
+
+# Include documentation directory
+recursive-include docs *.md
+recursive-include docs *.rst
+recursive-include docs *.txt
+
+# Include assets
+recursive-include assets *
+recursive-include assets/icons *
+recursive-include assets/images *
+
+# Include language files
+recursive-include lang *.py
+
+# Exclude development and cache files
+exclude *.pyc
+exclude *.pyo
+exclude __pycache__
+exclude .git*
+exclude .DS_Store
+exclude Thumbs.db
+exclude *.log
+exclude venv
+exclude build
+exclude dist
+
+# Exclude test files from distribution (unless building a test distribution)
+exclude tests
+exclude .pytest_cache
+exclude .coverage
+exclude htmlcov
