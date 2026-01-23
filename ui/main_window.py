@@ -398,7 +398,29 @@ class MainWindow(QMainWindow):
     
     def _show_database_tools(self):
         """Show database tools dialog"""
-        QMessageBox.information(self, "Database Tools", "Database tools dialog will be implemented in future versions.")
+        try:
+            from .database_tools_dialog import DatabaseToolsDialog
+            
+            # Create and show database tools dialog
+            dialog = DatabaseToolsDialog(self, self.dns_server.database)
+            dialog.exec_()
+            
+        except Exception as e:
+            self.logger.error(f"Error showing database tools: {e}")
+            QMessageBox.critical(self, "Error", f"Failed to open database tools:\n{str(e)}")
+    
+    def _show_ip_converter(self):
+        """Show IP converter dialog"""
+        try:
+            from .ip_converter_dialog import IPConverterDialog
+            
+            # Create and show IP converter dialog
+            dialog = IPConverterDialog(self)
+            dialog.exec_()
+            
+        except Exception as e:
+            self.logger.error(f"Error showing IP converter: {e}")
+            QMessageBox.critical(self, "Error", f"Failed to open IP converter:\n{str(e)}")
     
     def _export_configuration(self):
         """Export current configuration"""
@@ -549,4 +571,13 @@ Email: {version_info['email']}
     
     def _show_server_diagnostics(self):
         """Show server diagnostics"""
-        QMessageBox.information(self, "Server Diagnostics", "Server diagnostics will be implemented in future versions.")
+        try:
+            from .diagnostics_dialog import DiagnosticsDialog
+            
+            # Create and show diagnostics dialog
+            dialog = DiagnosticsDialog(self, self.dns_server, self.dns_server.database)
+            dialog.exec_()
+            
+        except Exception as e:
+            self.logger.error(f"Error showing diagnostics: {e}")
+            QMessageBox.critical(self, "Error", f"Failed to open diagnostics:\n{str(e)}")

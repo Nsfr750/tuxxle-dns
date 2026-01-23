@@ -18,7 +18,7 @@ This document outlines the planned development roadmap for DNS Server Manager.
 
 ---
 
-## Version 1.1.0 - Q2 2024
+## Version 1.1.0 - Q2 2026
 
 ### 🎯 Enhanced User Experience
 - [ ] Dark/Light theme toggle
@@ -46,7 +46,7 @@ This document outlines the planned development roadmap for DNS Server Manager.
 
 ---
 
-## Version 1.2.0 - Q3 2024
+## Version 1.2.0 - Q3 2026
 
 ### 🔒 Security Features
 - [ ] DNSSEC support
@@ -74,7 +74,7 @@ This document outlines the planned development roadmap for DNS Server Manager.
 
 ---
 
-## Version 1.3.0 - Q4 2024
+## Version 1.3.0 - Q4 2026
 
 ### 🚀 Performance & Scalability
 - [ ] Multi-threaded query handling
@@ -102,7 +102,7 @@ This document outlines the planned development roadmap for DNS Server Manager.
 
 ---
 
-## Version 2.0.0 - Q1 2025
+## Version 2.0.0 - Q1 2027
 
 ### 🏗️ Architecture Improvements
 - [ ] Microservices architecture
@@ -130,7 +130,7 @@ This document outlines the planned development roadmap for DNS Server Manager.
 
 ---
 
-## Version 2.1.0 - Q2 2025
+## Version 2.1.0 - Q2 2027
 
 ### 🌍 Internationalization
 - [ ] Multi-language support
@@ -158,7 +158,7 @@ This document outlines the planned development roadmap for DNS Server Manager.
 
 ---
 
-## Long-term Vision (2025+)
+## Long-term Vision (2028+)
 
 ### 🚀 Next-Generation Features
 - [ ] AI-powered DNS optimization

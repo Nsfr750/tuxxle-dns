@@ -116,13 +116,19 @@ def get_pyinstaller_command(args):
         "core.database",
         "core.dns_records",
         "core.version",
+        "core.server_diagnostics",
+        "core.ip_converter",
         "ui.main_window",
+        "ui.diagnostics_dialog",
+        "ui.database_tools_dialog",
+        "ui.ip_converter_dialog",
         "lang.language_manager",
         "lang.translations",
         "wand",
         "qrcode",
         "requests",
-        "dns.resolver"
+        "dns.resolver",
+        "psutil"
     ]
     
     for import_name in hidden_imports:

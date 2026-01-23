@@ -104,6 +104,10 @@ class MenuManager:
         db_tools_action = tools_menu.addAction("Database Tools")
         db_tools_action.triggered.connect(self.main_window._show_database_tools)
         
+        # IP Converter
+        ip_converter_action = tools_menu.addAction("IP Converter")
+        ip_converter_action.triggered.connect(self.main_window._show_ip_converter)
+        
         # Clear logs
         clear_logs_action = tools_menu.addAction("Clear Logs")
         clear_logs_action.triggered.connect(self.main_window._clear_logs)
