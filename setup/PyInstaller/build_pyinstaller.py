@@ -89,8 +89,8 @@ def get_pyinstaller_command(args):
     if os.path.exists(icon_path):
         cmd.extend(["--icon", icon_path])
     
-    # Add version info for Windows
-    if platform.system() == "Windows":
+    # Add version info for Windows (disabled for one-file due to pefile issues)
+    if platform.system() == "Windows" and not args.onefile:
         version_info = create_version_file()
         if version_info:
             cmd.extend(["--version-file", version_info])
@@ -219,7 +219,7 @@ VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
 )
 """
     
-    version_file_path = "version_info.txt"
+    version_file_path = "assets/version_info.txt"
     try:
         with open(version_file_path, "w", encoding="utf-8") as f:
             f.write(version_file_content)
@@ -243,7 +243,7 @@ if hasattr(sys, 'frozen'):
 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
 """
     
-    hook_path = "rthook_pyqt6.py"
+    hook_path = "setup/PyInstaller/rthook_pyqt6.py"
     try:
         with open(hook_path, "w", encoding="utf-8") as f:
             f.write(hook_content)
@@ -254,17 +254,21 @@ os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
 
 def run_build(cmd):
     """Run the build command."""
+    import subprocess
+    import os
+    
+    # Set environment variable to disable timestamp issues
+    env = os.environ.copy()
+    env['PYINSTALLER_NO_TIMESTAMP'] = '1'
+    
     print("Running PyInstaller...")
-    print("Command:", " ".join(cmd))
+    print("This may take a while...")
     
     try:
-        result = subprocess.run(cmd, check=True)
+        result = subprocess.run(cmd, env=env)
         return result.returncode
-    except subprocess.CalledProcessError as e:
-        print(f"Build failed with error code {e.returncode}")
-        return e.returncode
     except Exception as e:
-        print(f"Build failed with error: {e}")
+        print(f"Error running build: {e}")
         return 1
 
 def build():
