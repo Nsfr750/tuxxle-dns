@@ -55,7 +55,7 @@ A comprehensive DNS server management tool with graphical interface, built with 
 
 ### Prerequisites
 
-- Python 3.11 or higher
+- Python 3.10 or higher
 - Windows 10/11 (recommended)
 - Administrator privileges (for port 53)
 
@@ -98,26 +98,36 @@ python install_deps.py
 
 3. **Install dependencies:**
 
-   **For Python 3.12+:**
-
-   ```bash
-   pip install -r requirements-312.txt
-   ```
-
-   **For Python 3.8-3.11:**
-
    ```bash
    pip install -r requirements.txt
    ```
 
-### Manual Installation
+### Building Executable
+
+#### PyInstaller Build (Recommended)
 
 ```bash
-# Install PySide6
-pip install PySide6>=6.10.0
+# Build as directory (most reliable)
+python setup\PyInstaller\build_pyinstaller.py --windowed
 
-# Install the package
-python setup.py install
+# Build as single file
+python setup\PyInstaller\build_pyinstaller.py --onefile --windowed
+
+# Debug mode (shows console)
+python setup\PyInstaller\build_pyinstaller.py --debug
+```
+
+#### Quick Start
+
+```bash
+# Run from source
+python main.py
+
+# Or use the launcher
+run_app.bat
+
+# Run built executable
+dist\Tuxxle-DNS-1.1.0\Tuxxle-DNS-1.1.0.exe
 ```
 
 ## Usage
@@ -125,11 +135,14 @@ python setup.py install
 ### Starting the Application
 
 ```bash
-# Launch the GUI
+# Launch the GUI from source
 python main.py
 
-# Or using the installed script
-tuxxle-dns-gui
+# Or using the launcher
+run_app.bat
+
+# Run built executable
+dist\Tuxxle-DNS-1.1.0\Tuxxle-DNS-1.1.0.exe
 ```
 
 ### Initial Configuration
@@ -151,6 +164,7 @@ tuxxle-dns-gui
 ```text
 tuxxle-dns/
 ├── main.py                  # Application entry point
+├── run_app.bat              # Windows launcher script
 ├── config/                  # Configuration and data directory
 │   ├── config.json          # Default configuration file
 │   ├── dns_records.db       # DNS records database
@@ -159,6 +173,11 @@ tuxxle-dns/
 ├── requirements.txt         # Python dependencies
 ├── CHANGELOG.md             # Version changelog
 ├── README.md                # Project documentation
+├── setup/                   # Build system
+│   ├── PyInstaller/         # PyInstaller build scripts
+│   │   └── build_pyinstaller.py
+│   └── Nuitka/              # Nuitka build scripts
+│       └── build_nuitka.py
 ├── core/                    # Core functionality
 │   ├── __init__.py
 │   ├── version.py           # Version information
@@ -305,6 +324,27 @@ black .
 
 # Type checking
 mypy .
+```
+
+### Building for Distribution
+
+#### PyInstaller (Recommended)
+
+```bash
+# Build directory version (most reliable)
+python setup\PyInstaller\build_pyinstaller.py --windowed
+
+# Build single file version
+python setup\PyInstaller\build_pyinstaller.py --onefile --windowed
+
+# Output location: dist/Tuxxle-DNS-1.1.0/
+```
+
+#### Nuitka (Advanced)
+
+```bash
+# Requires Visual Studio Build Tools with Windows SDK
+python setup\Nuitka\build_nuitka.py --onefile
 ```
 
 ### Extensions

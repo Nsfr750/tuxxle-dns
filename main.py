@@ -15,11 +15,26 @@ from core.config import Config
 
 def setup_logging():
     """Setup logging configuration"""
+    # Determine the correct path for config directory
+    if getattr(sys, 'frozen', False):
+        # Running as PyInstaller executable
+        base_path = Path(sys._MEIPASS)
+    else:
+        # Running as script
+        base_path = Path(__file__).parent
+    
+    config_dir = base_path / 'config'
+    
+    # Ensure config directory exists
+    config_dir.mkdir(parents=True, exist_ok=True)
+    
+    log_file = config_dir / 'dns_server.log'
+    
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('config/dns_server.log'),
+            logging.FileHandler(log_file),
             logging.StreamHandler()
         ]
     )

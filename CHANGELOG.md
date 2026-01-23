@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed dependency conflicts and assertion errors
   - Enhanced build script error handling and logging
 
-## [1.1.0] - 2026-01-21
+## [1.1.0] - 2026-01-23
 
 ### Added (1.1.0)
 
@@ -72,6 +72,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Clear logs functionality
   - Export configuration placeholder
   - Preferences placeholder
+- **Build System**: Complete build infrastructure
+  - Added PyInstaller build system as primary build method
+  - Created comprehensive build scripts for both PyInstaller and Nuitka
+  - PyInstaller directory build for reliable distribution
+  - Single-file build options for portable executables
+  - Automatic dependency management and asset inclusion
+  - Cross-platform build support
+  - Build documentation and troubleshooting guides
 
 ### Changed (1.1.0)
 
@@ -99,10 +107,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed (1.1.0)
 
-- Logo loading issues in About dialog with proper path resolution
-- Asset loading for both development and packaged environments
-- Email formatting in documentation
-- Markdown linting issues in documentation files
+- **DNS Server Issues**: Critical bug fixes
+  - Fixed DNS A record IP address encoding from ASCII string to binary format
+  - Corrected IP address representation in DNS responses using `socket.inet_aton()`
+  - Fixed IPv6 address encoding with `socket.inet_pton()` for AAAA records
+  - Resolved DNS query response format issues
+- **Module Import Issues**: Fixed import path problems
+  - Resolved `ModuleNotFoundError: No module named 'core'` in setup.py
+  - Fixed Python path configuration for proper module discovery
+  - Updated setup.py to correctly import version information
+- **Build System Issues**: Resolved compilation problems
+  - Fixed Nuitka Windows SDK header compatibility issues
+  - Resolved MinGW64 compiler configuration problems
+  - Added PyInstaller as reliable alternative to Nuitka
+  - Fixed asset inclusion in packaged executables
+- **UI and Asset Issues**: Interface improvements
+  - Logo loading issues in About dialog with proper path resolution
+  - Asset loading for both development and packaged environments
+  - Email formatting in documentation
+  - Markdown linting issues in documentation files
 
 ## [1.0.0] - 2024-01-21
 

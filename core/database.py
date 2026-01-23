@@ -4,6 +4,7 @@ SQLite database management for DNS records
 
 import sqlite3
 import logging
+import sys
 from pathlib import Path
 from typing import List, Optional
 from .dns_records import DNSRecord, DNSRecordType
@@ -12,8 +13,19 @@ class DNSSQLiteDatabase:
     """SQLite database for DNS records persistence"""
     
     def __init__(self, db_path: str = "config/dns_records.db"):
-        self.db_path = Path(db_path)
+        # Determine the correct path for config directory
+        if getattr(sys, 'frozen', False):
+            # Running as PyInstaller executable
+            base_path = Path(sys._MEIPASS)
+        else:
+            # Running as script
+            base_path = Path(__file__).parent.parent
+        
+        self.db_path = base_path / db_path
         self.logger = logging.getLogger(__name__)
+        
+        # Ensure database directory exists
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
         
         self._init_database()
     

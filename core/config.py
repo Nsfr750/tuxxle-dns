@@ -4,6 +4,7 @@ Configuration management for DNS Server
 
 import json
 import logging
+import sys
 from pathlib import Path
 from typing import Dict, Any
 
@@ -31,7 +32,15 @@ class Config:
     }
     
     def __init__(self, config_file: str = "config/config.json"):
-        self.config_file = Path(config_file)
+        # Determine the correct path for config directory
+        if getattr(sys, 'frozen', False):
+            # Running as PyInstaller executable
+            base_path = Path(sys._MEIPASS)
+        else:
+            # Running as script
+            base_path = Path(__file__).parent.parent
+        
+        self.config_file = base_path / config_file
         self.logger = logging.getLogger(__name__)
         self._config = self._load_config()
     
