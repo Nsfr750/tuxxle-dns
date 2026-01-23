@@ -6,4 +6,3 @@ qrcode[pil]==8.2
 requests==2.31.0
 dnspython==2.6.1
 nuitka==2.4.7
-PyInstaller==6.10.0
