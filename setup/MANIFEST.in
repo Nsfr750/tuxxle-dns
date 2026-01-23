@@ -1,4 +1,4 @@
-# Manifest file for DNS Server Manager
+# Manifest file for DNS Server Manager v1.2.0
 # Specifies additional files to include in the distribution
 
 # Include documentation files
@@ -6,6 +6,7 @@ include README.md
 include LICENSE
 include CHANGELOG.md
 include requirements.txt
+include requirements-312.txt
 include setup.py
 include py-build.py
 include build.spec
@@ -16,6 +17,7 @@ include build.bat
 include *.json
 include *.ini
 include *.cfg
+include *.db
 
 # Include documentation directory
 recursive-include docs *.md
@@ -29,6 +31,22 @@ recursive-include assets/images *
 
 # Include language files
 recursive-include lang *.py
+
+# Include setup files
+recursive-include setup *.py
+recursive-include setup *.toml
+recursive-include setup *.cfg
+recursive-include setup *.ini
+
+# Include PyInstaller build files
+recursive-include setup/PyInstaller *.py
+recursive-include setup/PyInstaller *.spec
+recursive-include setup/PyInstaller *.txt
+
+# Include configuration directory
+recursive-include config *.json
+recursive-include config *.db
+recursive-include config *.log
 
 # Exclude development and cache files
 exclude *.pyc
@@ -47,3 +65,15 @@ exclude tests
 exclude .pytest_cache
 exclude .coverage
 exclude htmlcov
+
+# Exclude IDE files
+exclude .vscode
+exclude .idea
+exclude *.swp
+exclude *.swo
+
+# Exclude temporary files
+exclude *.tmp
+exclude *.temp
+exclude .env
+exclude .env.*

@@ -7,8 +7,8 @@ VSVersionInfo(
   ffi=FixedFileInfo(
 # filevers and prodvers should be always a tuple with four items: (1, 2, 3, 4)
 # Set not needed items to zero 0.
-filevers=(1, 1, 0, 0),
-prodvers=(1, 1, 0, 0),
+filevers=(1, 2, 0, 0),
+prodvers=(1, 2, 0, 0),
 # Contains a bitmask that specifies the valid bits 'flags'r
 mask=0x3f,
 # Contains a bitmask that specifies the Boolean attributes of the file.
@@ -32,12 +32,12 @@ StringFileInfo(
     u'040904B0',
     [StringStruct(u'CompanyName', u'Tuxxle'),
     StringStruct(u'FileDescription', u'DNS Server Manager - DNS Server Manager with PySide6 GUI'),
-    StringStruct(u'FileVersion', u'1.1.0'),
+    StringStruct(u'FileVersion', u'1.2.0'),
     StringStruct(u'InternalName', u'DNSServerManager'),
     StringStruct(u'LegalCopyright', u'Copyright (c) 2024-2026 Nsfr750 - All rights reserved.'),
-    StringStruct(u'OriginalFilename', u'DNS Server Manager-1.1.0.exe'),
+    StringStruct(u'OriginalFilename', u'DNS Server Manager-1.2.0.exe'),
     StringStruct(u'ProductName', u'DNS Server Manager'),
-    StringStruct(u'ProductVersion', u'1.1.0'),
+    StringStruct(u'ProductVersion', u'1.2.0'),
     StringStruct(u'Comments', u'DNS Server Manager with internationalization support and comprehensive testing framework'),
     StringStruct(u'LegalTrademarks', u'Tuxxle is a registered trademark of Tuxxle'),
     StringStruct(u'PrivateBuild', u'PyInstaller Build'),

@@ -43,21 +43,21 @@ try:
     # VERSION_QUALIFIER is ignored for Windows file version as it must be integers only
     version_parts = [
         str(version.get("VERSION_MAJOR", 1)),
-        str(version.get("VERSION_MINOR", 1)),
+        str(version.get("VERSION_MINOR", 2)),
         str(version.get("VERSION_PATCH", 0)),
         "0"  # Build number, always 0 for now
     ]
     VERSION = '.'.join(version_parts[:4])  # Take first 4 parts
     
     # Get the full version string with qualifier for output filename
-    __version__ = version.get("__version__", "1.1.0")
+    __version__ = version.get("__version__", "1.2.0")
     if not __version__:
         __version__ = get_version()
     
 except Exception as e:
     print(f"Error reading version from {VERSION_FILE}: {e}")
-    VERSION = "1.1.0"
-    __version__ = "1.1.0"
+    VERSION = "1.2.0"
+    __version__ = "1.2.0"
 
 def parse_arguments():
     """Parse command line arguments."""

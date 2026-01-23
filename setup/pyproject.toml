@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "dns-server-manager"
 dynamic = ["version"]
-description = "DNS Server Manager with PySide6 GUI and internationalization support"
+description = "Enterprise DNS Server Manager with Green DNS, Security, and Advanced Features"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
@@ -22,7 +22,16 @@ keywords = [
     "pyside6",
     "windows",
     "internationalization",
-    "testing"
+    "testing",
+    "green-dns",
+    "sustainability",
+    "energy-monitoring",
+    "carbon-footprint",
+    "dnssec",
+    "security",
+    "wildcard-records",
+    "conditional-forwarding",
+    "enterprise"
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -30,6 +39,8 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Internet :: Name Service (DNS)",
     "Topic :: System :: Networking",
+    "Topic :: System :: Monitoring",
+    "Topic :: System :: Systems Administration",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -52,6 +63,9 @@ dependencies = [
     "PySide6-Essentials>=6.10.0",
     "wand>=0.6.13",
     "qrcode>=8.2",
+    "psutil>=5.9.0",
+    "cryptography>=41.0.7",
+    "dnspython>=2.6.1",
 ]
 
 [project.optional-dependencies]
@@ -62,13 +76,21 @@ test = [
 ]
 build = [
     "pyinstaller>=6.12.0",
-    "nuitka>=0.7.1",
+    "nuitka>=2.4.7",
 ]
 dev = [
     "black>=23.0.0",
     "mypy>=1.0.0",
     "flake8>=6.0.0",
     "pre-commit>=3.0.0",
+]
+security = [
+    "cryptography>=41.0.7",
+    "bcrypt>=4.0.0",
+]
+monitoring = [
+    "psutil>=5.9.0",
+    "prometheus-client>=0.16.0",
 ]
 
 [project.urls]

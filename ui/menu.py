@@ -60,7 +60,6 @@ class MenuManager:
         
         # Language submenu
         language_menu = file_menu.addMenu("Language")
-        
         self.language_manager = LanguageManager()
         
         # Add language options

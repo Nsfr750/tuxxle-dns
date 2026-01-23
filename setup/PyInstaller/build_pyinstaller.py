@@ -37,10 +37,10 @@ try:
     version = {}
     with open(VERSION_FILE, "r") as f:
         exec(f.read(), version)
-    __version__ = version.get("__version__", "1.1.0")
+    __version__ = version.get("__version__", "1.2.0")
 except Exception as e:
     print(f"Error reading version from {VERSION_FILE}: {e}")
-    __version__ = "1.1.0"
+    __version__ = "1.2.0"
 
 def parse_arguments():
     """Parse command line arguments."""
@@ -172,14 +172,14 @@ def create_version_file():
         with open(VERSION_FILE, "r") as f:
             exec(f.read(), version_info)
         app_name = version_info.get("__app_name__", "Tuxxle-DNS")
-        app_version = version_info.get("__version__", "1.1.0")
+        app_version = version_info.get("__version__", "1.2.0")
         app_author = version_info.get("__author__", "Nsfr750")
         app_org = version_info.get("__organization__", "Tuxxle")
         app_copyright = version_info.get("__copyright__", "© Copyright 2024-2026 Nsfr750 - All rights reserved.")
     except Exception as e:
         print(f"Warning: Could not read version info: {e}")
         app_name = "Tuxxle-DNS"
-        app_version = "1.1.0"
+        app_version = "1.2.0"
         app_author = "Nsfr750"
         app_org = "Tuxxle"
         app_copyright = "© Copyright 2024-2026 Nsfr750 - All rights reserved."
