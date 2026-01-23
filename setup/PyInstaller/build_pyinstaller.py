@@ -258,7 +258,7 @@ if hasattr(sys, 'frozen'):
 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
 """
     
-    hook_path = "setup/PyInstaller/rthook_pyqt6.py"
+    hook_path = "setup/hooks/rthook_pyqt6.py"
     try:
         with open(hook_path, "w", encoding="utf-8") as f:
             f.write(hook_content)
