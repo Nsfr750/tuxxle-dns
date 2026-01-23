@@ -6,3 +6,4 @@ dnspython==2.6.1
 nuitka==2.4.7
 pyinstaller==5.13.2
 psutil==5.9.8
+cryptography==41.0.7

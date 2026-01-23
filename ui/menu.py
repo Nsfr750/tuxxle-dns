@@ -108,6 +108,10 @@ class MenuManager:
         ip_converter_action = tools_menu.addAction("IP Converter")
         ip_converter_action.triggered.connect(self.main_window._show_ip_converter)
         
+        # Security
+        security_action = tools_menu.addAction("Security")
+        security_action.triggered.connect(self.main_window._show_security)
+        
         # Clear logs
         clear_logs_action = tools_menu.addAction("Clear Logs")
         clear_logs_action.triggered.connect(self.main_window._clear_logs)

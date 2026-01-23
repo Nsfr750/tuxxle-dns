@@ -422,6 +422,19 @@ class MainWindow(QMainWindow):
             self.logger.error(f"Error showing IP converter: {e}")
             QMessageBox.critical(self, "Error", f"Failed to open IP converter:\n{str(e)}")
     
+    def _show_security(self):
+        """Show security management dialog"""
+        try:
+            from .security_dialog import SecurityDialog
+            
+            # Create and show security dialog
+            dialog = SecurityDialog(self)
+            dialog.exec_()
+            
+        except Exception as e:
+            self.logger.error(f"Error showing security dialog: {e}")
+            QMessageBox.critical(self, "Error", f"Failed to open security dialog:\n{str(e)}")
+    
     def _export_configuration(self):
         """Export current configuration"""
         from PySide6.QtWidgets import QFileDialog

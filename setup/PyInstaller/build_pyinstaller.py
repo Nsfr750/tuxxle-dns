@@ -118,17 +118,24 @@ def get_pyinstaller_command(args):
         "core.version",
         "core.server_diagnostics",
         "core.ip_converter",
+        "core.dnssec",
+        "core.security",
+        "core.secure_config",
+        "core.wildcard",
+        "core.forwarding",
         "ui.main_window",
         "ui.diagnostics_dialog",
         "ui.database_tools_dialog",
         "ui.ip_converter_dialog",
+        "ui.security_dialog",
         "lang.language_manager",
         "lang.translations",
         "wand",
         "qrcode",
         "requests",
         "dns.resolver",
-        "psutil"
+        "psutil",
+        "cryptography"
     ]
     
     for import_name in hidden_imports:

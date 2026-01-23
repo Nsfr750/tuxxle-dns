@@ -11,6 +11,10 @@ from typing import Dict, List, Optional, Tuple
 from .dns_records import DNSRecord, DNSRecordType, DNSResponse
 from .config import Config
 from .database import DNSSQLiteDatabase
+from .security import SecurityManager
+from .dnssec import DNSSECManager
+from .wildcard import WildcardManager
+from .forwarding import ConditionalForwarding
 
 class DNSServer:
     """DNS Server implementation"""
@@ -25,6 +29,12 @@ class DNSServer:
         # Database for persistent storage
         self.database = DNSSQLiteDatabase()
         
+        # Security managers
+        self.security_manager = SecurityManager()
+        self.dnssec_manager = DNSSECManager()
+        self.wildcard_manager = WildcardManager()
+        self.conditional_forwarding = ConditionalForwarding()
+        
         # DNS records storage (in-memory cache)
         self.records: Dict[str, List[DNSRecord]] = {}
         
@@ -33,6 +43,7 @@ class DNSServer:
             'queries_received': 0,
             'responses_sent': 0,
             'errors': 0,
+            'blocked_queries': 0,
             'start_time': None
         }
         
@@ -215,8 +226,29 @@ class DNSServer:
                 self.stats['errors'] += 1
                 return
             
+            # Extract query information for security checks
+            client_ip = client_address[0]
+            query_name = query.get('questions', [{}])[0].get('name', '') if query.get('questions') else ''
+            query_type = query.get('questions', [{}])[0].get('type', '') if query.get('questions') else ''
+            
+            # Security checks
+            allowed, security_result = self.security_manager.check_request(client_ip, query_name, query_type)
+            
+            if not allowed:
+                self.stats['blocked_queries'] += 1
+                self.logger.warning(f"Query blocked from {client_ip}: {security_result.get('reason', 'Unknown')}")
+                
+                # Send REFUSED response
+                refused_response = self._create_refused_response(query)
+                self.server_socket.sendto(refused_response, client_address)
+                return
+            
             # Generate response
-            response = self._generate_response(query)
+            response = self._generate_response(query, client_ip)
+            
+            # Apply DNSSEC if enabled
+            if self.dnssec_manager.enabled:
+                response = self._apply_dnssec(response, query_name)
             
             # Send response
             self.server_socket.sendto(response, client_address)
@@ -227,6 +259,48 @@ class DNSServer:
         except Exception as e:
             self.logger.error(f"Error handling query from {client_address}: {e}")
             self.stats['errors'] += 1
+    
+    def _create_refused_response(self, query: Dict) -> bytes:
+        """Create a REFUSED DNS response"""
+        try:
+            # Create response with REFUSED status
+            response = bytearray()
+            
+            # Copy header and set response flags
+            if len(query.get('header', b'')) >= 12:
+                header = bytearray(query['header'][:12])
+                header[2] |= 0x80  # QR flag (response)
+                header[3] |= 0x05  # RCODE = REFUSED
+                response.extend(header)
+            
+            # Copy question section
+            if 'questions' in query:
+                for question in query['questions']:
+                    response.extend(question.get('data', b''))
+            
+            return bytes(response)
+            
+        except Exception as e:
+            self.logger.error(f"Error creating refused response: {e}")
+            return b''
+    
+    def _apply_dnssec(self, response: bytes, query_name: str) -> bytes:
+        """Apply DNSSEC signatures to response"""
+        try:
+            # Simplified DNSSEC application
+            # In a full implementation, this would:
+            # 1. Parse the response
+            # 2. Add RRSIG records for signed records
+            # 3. Add DNSKEY records if requested
+            # 4. Add NSEC records for negative responses
+            
+            # For now, just return the response unchanged
+            # The actual DNSSEC signing would be done in the zone signing process
+            return response
+            
+        except Exception as e:
+            self.logger.error(f"Error applying DNSSEC: {e}")
+            return response
     
     def _parse_dns_query(self, data: bytes) -> Optional[Dict]:
         """Parse DNS query packet"""
@@ -287,7 +361,7 @@ class DNSServer:
             self.logger.error(f"Error parsing DNS query: {e}")
             return None
     
-    def _generate_response(self, query: Dict) -> bytes:
+    def _generate_response(self, query: Dict, client_ip: str = None) -> bytes:
         """Generate DNS response"""
         transaction_id = query['transaction_id']
         flags = query['flags']
@@ -296,10 +370,14 @@ class DNSServer:
         # Build response header
         response_flags = 0x8000 | (flags & 0x0100)  # QR=1, RD preserved
         answer_count = 0
+        authority_count = 0
+        additional_count = 0
         
         # Build response sections
         question_section = b''
         answer_section = b''
+        authority_section = b''
+        additional_section = b''
         
         for question in questions:
             # Rebuild question section
@@ -307,7 +385,36 @@ class DNSServer:
             question_section += qname + struct.pack('!HH', question['type'], question['class'])
             
             # Look for answer
-            record = self.get_record(question['name'], DNSRecordType(question['type']))
+            query_name = question['name']
+            query_type = DNSRecordType(question['type'])
+            
+            # First check for exact match
+            record = self.get_record(query_name, query_type)
+            
+            # If no exact match, check for wildcard records
+            if not record:
+                wildcard_records = self.wildcard_manager.find_matching_records(query_name, query_type.name)
+                if wildcard_records:
+                    record = wildcard_records[0]  # Use first matching wildcard record
+                    self.logger.debug(f"Using wildcard record for {query_name}: {record.value}")
+            
+            # If still no record, check if we should forward
+            if not record and client_ip:
+                local_records = self.get_all_records(query_name)  # Get all local records for this name
+                should_forward, forward_servers, rule_name = self.conditional_forwarding.should_forward(
+                    query_name, query_type.name, client_ip, local_records
+                )
+                
+                if should_forward and forward_servers:
+                    # Forward the query
+                    forwarded_response = self._forward_query(query, forward_servers)
+                    if forwarded_response:
+                        return forwarded_response
+                    else:
+                        # Forwarding failed, return NXDOMAIN
+                        response_flags |= 0x0003  # NXDOMAIN
+                        continue
+            
             if record:
                 answer_count += 1
                 answer_section += qname  # Name
@@ -333,18 +440,67 @@ class DNSServer:
                     data_length        # Data length
                 )
                 answer_section += ip_bytes  # Data
+            else:
+                # No record found - return NXDOMAIN
+                response_flags |= 0x0003  # NXDOMAIN
         
         # Build complete response
-        header = struct.pack('!HHHHHH',
+        header = struct.pack('!HHHHHH', 
             transaction_id,
             response_flags,
-            len(questions),     # QDCount
-            answer_count,       # ANCount
-            0,                  # NSCount
-            0                   # ARCount
+            len(questions),
+            answer_count,
+            authority_count,
+            additional_count
         )
         
-        return header + question_section + answer_section
+        return header + question_section + answer_section + authority_section + additional_section
+    
+    def _forward_query(self, query: Dict, servers: List[str]) -> Optional[bytes]:
+        """Forward query to specified servers"""
+        try:
+            # Rebuild the original query packet
+            transaction_id = query['transaction_id']
+            flags = query['flags']
+            questions = query['questions']
+            
+            # Build query packet
+            query_packet = bytearray()
+            query_packet.extend(struct.pack('!HHHHHH', 
+                transaction_id,
+                flags,
+                len(questions),
+                0,  # Answer RRs
+                0,  # Authority RRs
+                0   # Additional RRs
+            ))
+            
+            # Add question section
+            for question in questions:
+                qname = self._encode_domain_name(question['name'])
+                query_packet.extend(qname + struct.pack('!HH', question['type'], question['class']))
+            
+            # Forward to each server until we get a response
+            for server in servers:
+                try:
+                    response = self.conditional_forwarding.forward_query(
+                        bytes(query_packet), 
+                        [server], 
+                        timeout=5
+                    )
+                    if response:
+                        self.logger.debug(f"Successfully forwarded query to {server}")
+                        return response
+                except Exception as e:
+                    self.logger.warning(f"Failed to forward to {server}: {e}")
+                    continue
+            
+            self.logger.warning(f"All forwarding servers failed for query")
+            return None
+            
+        except Exception as e:
+            self.logger.error(f"Error in _forward_query: {e}")
+            return None
     
     def _encode_domain_name(self, domain: str) -> bytes:
         """Encode domain name for DNS packet"""
@@ -361,6 +517,11 @@ class DNSServer:
         encoded += b'\x00'  # End of name
         return encoded
     
+    def get_all_records(self, name: str) -> List[DNSRecord]:
+        """Get all records for a name"""
+        name = name.lower()
+        return self.records.get(name, [])
+    
     def get_stats(self) -> Dict:
         """Get server statistics"""
         stats = self.stats.copy()
@@ -368,4 +529,14 @@ class DNSServer:
             stats['uptime'] = time.time() - stats['start_time']
         else:
             stats['uptime'] = 0
+        
+        # Add wildcard statistics
+        stats['wildcard'] = self.wildcard_manager.get_wildcard_statistics()
+        
+        # Add forwarding statistics
+        stats['forwarding'] = self.conditional_forwarding.get_forwarding_statistics()
+        
+        # Add security statistics
+        stats['security'] = self.security_manager.get_security_status()
+        
         return stats
